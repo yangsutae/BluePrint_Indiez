@@ -1,0 +1,130 @@
+/* BluePrint Indiez 랜딩페이지 — base.css 위에 얹는 페이지 전용 스타일 */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { min-width: 0; background: var(--blue); }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 50; padding: 10px 14px; background: var(--paper); color: var(--blue); font-weight: 700; text-decoration: none; }
+.skip:focus { top: 12px; }
+
+/* ── 스크롤 무대: 1440×900 무대를 창에 맞춰 확대·축소 ── */
+.hero { position: relative; height: 880vh; }
+.vp {
+  position: sticky; top: 0; height: 100vh; overflow: hidden;
+  background-color: var(--blue);
+  background-image:
+    linear-gradient(var(--grid-minor) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.stage { position: absolute; left: 50%; top: 50%; transform-origin: 50% 50%; transform: translate(-50%, -50%); }
+.layer { position: absolute; inset: 0; pointer-events: none; }
+.layer a, .layer .card, .layer .mini { pointer-events: auto; }
+
+/* K0 */
+.k0 .intro { top: 110px; width: 428px; }
+.k0 .intro .brand { width: 428px; height: 160px; margin-bottom: 26px; }
+.k0 .titleblock { left: 72px; right: auto; bottom: auto; top: 642px; width: 428px; }
+.iso-frame { position: absolute; left: 1060px; top: 110px; width: 308px; height: 681px; border: 1px dashed rgba(166, 232, 235, .45); }
+.cap-m { position: absolute; z-index: 4; margin: 0; font: 500 11px/1.4 var(--font-mono); letter-spacing: .08em; color: var(--cyan); }
+.iso-frame .cap-m { left: 12px; top: 10px; }
+.cue { position: absolute; left: 0; right: 0; bottom: 96px; margin: 0; text-align: center; font: 500 12px/1 var(--font-mono); letter-spacing: .14em; color: var(--line-soft); }
+.cue span { display: inline-block; animation: cue 1.8s ease-in-out infinite; }
+@keyframes cue { 50% { transform: translateY(6px); } }
+@media (prefers-reduced-motion: reduce) { .cue span { animation: none; } }
+
+/* 3D 캐비닛 (한 벌을 스크롤 따라 이동) */
+.rig { position: absolute; left: 0; top: 0; width: 220px; height: 520px; z-index: 3; pointer-events: none; will-change: transform; }
+.rig .stage3d { left: 0; top: 0; }
+.rig .wire { z-index: 2; }
+.rig .solid { z-index: 3; }
+.rig .floor { left: -80px; top: 480px; width: 420px; height: 56px; z-index: 1; }
+
+/* K2~K5 부품 패널 (인셋 청사진 + 설명) */
+.mini {
+  position: absolute; left: 730px; top: 140px; width: 662px; height: 300px; margin: 0; z-index: 5;
+  background-color: #1d3d5f;
+  background-image: linear-gradient(rgba(166,232,235,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(166,232,235,.1) 1px, transparent 1px);
+  background-size: 24px 24px; background-position: -1px -1px;
+  border: 1.5px solid var(--line);
+}
+.mini::before { content: ""; position: absolute; inset: 5px; border: 1px solid var(--line-faint); pointer-events: none; }
+.mini-h { display: flex; justify-content: space-between; padding: 12px 18px 8px; font: 500 12px/1.4 var(--font-mono); letter-spacing: .06em; color: var(--cyan); border-bottom: 1px solid var(--line-faint); margin: 0 5px; }
+.mini .dwg { position: relative; display: block; }
+.mini-f { position: absolute; left: 18px; bottom: 12px; margin: 0; font: 500 11px/1.4 var(--font-mono); letter-spacing: .04em; color: var(--line-soft); }
+.desc { left: 730px; top: 458px; width: 662px; padding: 20px 28px 22px; }
+.desc .big-no { font-size: 48px; top: 14px; }
+.desc .kicker { margin-bottom: 10px; }
+.desc .page-title { font-size: 26px; margin: 0 0 8px; }
+.desc .page-lead { font-size: 15px; line-height: 1.6; margin: 0 0 10px; }
+.desc .list li { padding: 5px 0; font-size: 15px; }
+.desc .list small { line-height: 1.25; }
+.desc .list .btn { height: 38px; padding: 0 16px; font-size: 14px; margin-top: 2px; }
+
+/* K7 */
+.ring { position: absolute; left: 0; top: 0; overflow: visible; }
+.ring ellipse { fill: none; stroke: var(--line-soft); stroke-width: 1; }
+.ring .tick { stroke: var(--line-soft); stroke-width: 1; }
+.ring .tick.major { stroke: var(--paper); }
+.ring text { font: 500 11px/1 var(--font-mono); fill: var(--cyan); text-anchor: middle; }
+.ring .needle { stroke: var(--cyan); stroke-width: 1.5; }
+.closing { position: absolute; left: 760px; top: 170px; width: 590px; z-index: 5; }
+.closing .brand { width: 470px; height: 176px; margin: 0 0 30px; }
+.closing .tagline { font-size: 34px; margin: 0 0 14px; }
+.closing .lead { margin: 0 0 26px; }
+.closing .links { margin-top: 0; }
+
+/* 스크롤 진행 표시 (오른쪽 가장자리) */
+.progress { position: fixed; left: 50%; bottom: 22px; z-index: 20; transform: translateX(-50%); display: flex; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.progress a { display: block; width: 10px; height: 10px; border: 1px solid var(--line-soft); border-radius: 50%; }
+.progress a.on { background: var(--cyan); border-color: var(--cyan); }
+.progress a:focus-visible { outline-offset: 2px; }
+
+/* ── 하단 (함께하기) ── */
+.foot { position: relative; padding: 72px 24px 56px; background: #1b3753; border-top: 1px solid var(--line-soft); }
+.foot-in { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto; gap: 24px 48px; align-items: end; }
+.foot .brand { width: 260px; height: 97px; margin: 0 0 18px; }
+.foot h2 { margin: 0 0 8px; font-size: 28px; }
+.foot p { margin: 0; color: rgba(238,240,233,.9); line-height: 1.7; word-break: keep-all; }
+.foot .links { margin-top: 0; }
+.foot small { grid-column: 1 / -1; margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--line-faint); font: 12px/1.5 var(--font-mono); color: var(--line-soft); }
+
+/* ── 좁은 화면: 스크롤 연출 대신 세로 내용 ── */
+.mobile { display: none; }
+@media (max-width: 820px), (max-height: 520px) {
+  .hero, .progress { display: none; }
+  .mobile { display: block; padding: 40px 20px 24px; background-color: var(--blue);
+    background-image: linear-gradient(var(--grid-major) 1px, transparent 1px), linear-gradient(90deg, var(--grid-major) 1px, transparent 1px);
+    background-size: 48px 48px; }
+  .mobile .brand { width: min(320px, 100%); height: auto; aspect-ratio: 2455 / 918; margin: 0 0 20px; }
+  .mobile .tagline { font-size: 24px; }
+  .mobile .fig { display: block; width: min(240px, 70%); margin: 28px auto; }
+  .mobile section { margin-top: 36px; }
+  .mobile h2 { font-size: 22px; margin: 0 0 12px; }
+  .mobile .kicker { margin-bottom: 8px; }
+  .mobile .list li { font-size: 16px; }
+  .foot-in { grid-template-columns: 1fr; }
+  .foot .links { flex-direction: column; align-items: stretch; }
+  .foot .btn { justify-content: center; }
+}
+
+/* 3D 모델 투명도 80% (면마다 적용: 묶음에 주면 3D가 납작해짐) */
+#solid .f { opacity: .8; }
+
+/* K7 와이어프레임 켜기·끄기 */
+.wf-toggle {
+  position: absolute; left: 72px; top: 786px; z-index: 6; pointer-events: auto;
+  display: inline-flex; align-items: center; gap: 10px; height: 40px; padding: 0 16px 0 12px;
+  font: 500 13px/1 var(--font-mono); letter-spacing: .06em; color: var(--paper);
+  background: rgba(27, 55, 83, .92); border: 1.5px solid var(--line-soft); cursor: pointer;
+}
+.wf-toggle b { font-weight: 500; color: var(--line-soft); min-width: 3ch; }
+.wf-toggle .sw { position: relative; width: 30px; height: 16px; border: 1px solid var(--line-soft); border-radius: 8px; }
+.wf-toggle .sw::after { content: ""; position: absolute; left: 2px; top: 2px; width: 10px; height: 10px; border-radius: 50%; background: var(--line-soft); transition: transform .2s; }
+.wf-toggle[aria-pressed="true"] { border-color: var(--cyan); }
+.wf-toggle[aria-pressed="true"] b { color: var(--cyan); }
+.wf-toggle[aria-pressed="true"] .sw { border-color: var(--cyan); }
+.wf-toggle[aria-pressed="true"] .sw::after { transform: translateX(14px); background: var(--cyan); }
+.wf-toggle:hover { border-color: var(--cyan); }
+
+/* K0 → K1: 3면도가 3D 공간 안에서 모델과 함께 회전 */
+.rig .stage3d.dwg { z-index: 1; overflow: visible; }
+#dwg3d svg { position: absolute; left: -90px; top: -290px; overflow: visible; }

@@ -1,0 +1,161 @@
+/* 260928 리디자인 키프레임 공통 스타일 (로우 폴리 캐비닛 판)
+   색·선·시트: _archive/260925-blueprint-concepts/d6-exploded-parts/draft.html
+   3D 모델: js/lowpoly.js */
+:root {
+  --blue: #23466A; --paper: #EEF0E9; --teal: #004854; --cyan: #A6E8EB;
+  --blue-deep: #1b3753; --blue-shadow: #142a40;
+  --line: rgba(238, 240, 233, .9);
+  --line-soft: rgba(238, 240, 233, .55);
+  --line-faint: rgba(238, 240, 233, .28);
+  --grid-major: rgba(166, 232, 235, .16);
+  --grid-minor: rgba(166, 232, 235, .06);
+  --panel-bg: rgba(27, 55, 83, .94);
+  --font-sans: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Consolas", monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--blue); color: var(--paper); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; min-width: 1440px; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ── 시트 ── */
+.sheet { position: relative; width: 1440px; height: 900px; overflow: hidden; }
+.grid {
+  position: absolute; inset: 30px;
+  background-image:
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(var(--grid-minor) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
+  background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px;
+  background-position: -1px -1px;
+}
+.sheet.dark { background: radial-gradient(ellipse at 32% 70%, #1a1630 0%, #0f1424 50%, #0b0d16 85%); }
+.sheet.dark .grid { opacity: .35; }
+.frame, .dwg, .leaders { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+.frame { z-index: 2; }
+.frame .zone { font: 500 11px/1 var(--font-mono); fill: var(--line-soft); letter-spacing: .05em; }
+
+/* ── 도면 선 ── */
+.dwg { z-index: 1; }
+.dwg .ln { fill: none; stroke: var(--line); stroke-width: 2; stroke-linejoin: round; }
+.dwg .thin { fill: none; stroke: var(--line-soft); stroke-width: 1; }
+.dwg .hid { fill: none; stroke: var(--line-soft); stroke-width: 1; stroke-dasharray: 6 4; }
+.dwg .ctr { fill: none; stroke: var(--line-soft); stroke-width: 1; stroke-dasharray: 18 4 2 4; }
+.dwg .dim { fill: none; stroke: var(--line-soft); stroke-width: 1; }
+.dwg .ground { stroke: var(--line-soft); stroke-width: 1; }
+.dwg .arrow { fill: none; stroke: var(--cyan); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.dwg .cap { font: 500 11px/1 var(--font-mono); fill: var(--cyan); letter-spacing: .08em; }
+.dwg .tag { font: 500 14px/1 var(--font-mono); fill: var(--paper); }
+.num-b .bl { fill: var(--blue-deep); stroke: var(--paper); stroke-width: 1.2; }
+.num-b text { font: 500 12px/1 var(--font-mono); fill: var(--paper); text-anchor: middle; }
+
+/* ── 제목 (로고) ── */
+.eyebrow { font: 500 12px/1.4 var(--font-mono); letter-spacing: .08em; color: var(--cyan); margin: 0 0 16px; }
+.brand { margin: 0; overflow: hidden; } /* 로고 그림은 파일 위쪽 약 79%: 높이 = 폭 × .374 */
+.brand img { display: block; width: 100%; height: auto; }
+.intro { position: absolute; left: 72px; top: 84px; width: 460px; z-index: 5; }
+.intro .brand { width: 430px; height: 161px; margin-bottom: 26px; }
+.mark { position: absolute; left: 72px; top: 64px; width: 170px; z-index: 5; }
+.mark .brand { width: 170px; height: 64px; }
+.tagline { font-weight: 700; font-size: 28px; line-height: 1.3; letter-spacing: -.02em; margin: 0 0 12px; word-break: keep-all; }
+.lead { font-size: 16px; line-height: 1.7; margin: 0; word-break: keep-all; }
+
+/* ── 카드·목록 ── */
+.card { position: absolute; z-index: 5; padding: 26px 30px 30px; background: var(--panel-bg); border: 1.5px solid var(--line); }
+.card::before { content: ""; position: absolute; inset: 5px; border: 1px solid var(--line-faint); pointer-events: none; }
+.kicker { display: flex; align-items: center; gap: 10px; margin: 0 0 14px; font: 500 12px/1 var(--font-mono); letter-spacing: .08em; color: var(--cyan); }
+.kicker b { display: inline-grid; place-items: center; width: 24px; height: 24px; border: 1px solid var(--cyan); border-radius: 50%; font-weight: 500; }
+.page-title { font-size: 34px; line-height: 1.28; letter-spacing: -.02em; margin: 0 0 18px; word-break: keep-all; }
+.page-lead { font-size: 16px; line-height: 1.7; margin: 0 0 22px; word-break: keep-all; color: rgba(238,240,233,.92); }
+.big-no { position: absolute; right: 30px; top: 18px; font: 500 64px/1 var(--font-mono); color: rgba(166,232,235,.22); }
+.list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-soft); }
+.list li { display: grid; grid-template-columns: 40px 1fr; align-items: baseline; padding: 13px 0; border-bottom: 1px solid var(--line-faint); font-size: 17px; line-height: 1.5; word-break: keep-all; }
+.list li > span:first-child { font: 500 12px/1 var(--font-mono); color: var(--cyan); }
+.list.nums li { align-items: center; }
+.list small { display: block; font: 500 11px/1.4 var(--font-mono); color: var(--cyan); letter-spacing: .06em; }
+.num { display: inline-grid; place-items: center; width: 22px; height: 22px; flex: none; border: 1px solid var(--paper); border-radius: 50%; font: 500 12px/1 var(--font-mono); }
+.num.in { width: 20px; height: 20px; margin-right: 10px; border-color: currentColor; font-size: 11px; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.btn { display: inline-flex; align-items: center; height: 48px; padding: 0 22px; font: 500 15px/1 var(--font-sans); text-decoration: none; border: 2px solid var(--paper); }
+.btn.primary { background: var(--paper); color: var(--blue); }
+.btn.ghost { color: var(--paper); background: rgba(35,70,106,.7); }
+.btn:hover { background: var(--cyan); color: var(--teal); border-color: var(--cyan); }
+
+/* ── 인출선·풍선 ── */
+.leaders { z-index: 4; }
+.leaders path { fill: none; stroke: var(--paper); stroke-width: 1; }
+.leaders .dot { fill: var(--paper); }
+.leaders .bl { fill: var(--blue-deep); stroke: var(--paper); stroke-width: 1.2; }
+.leaders text { font: 500 12px/1 var(--font-mono); fill: var(--paper); text-anchor: middle; }
+.leaders .arw { stroke: var(--cyan); stroke-width: 1.5; stroke-dasharray: 6 5; fill: none; }
+.leaders .arw-head { fill: var(--cyan); }
+
+/* ── 표제란·시트 번호 ── */
+.titleblock {
+  position: absolute; right: 48px; bottom: 48px; width: 452px; z-index: 4;
+  display: grid; grid-template-columns: 1fr 1.15fr .7fr;
+  border: 2px solid var(--line); background: var(--blue);
+}
+.titleblock > div { border-right: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); padding: 6px 10px 7px; }
+.titleblock > div:nth-child(3n) { border-right: 0; }
+.titleblock .span3 { grid-column: 1 / -1; border-right: 0; }
+.titleblock .last { border-bottom: 0; }
+.titleblock .k { display: block; font: 400 10px/1.3 var(--font-mono); color: var(--cyan); letter-spacing: .06em; margin-bottom: 3px; }
+.titleblock .v { display: block; font: 500 13px/1.35 var(--font-sans); color: var(--paper); }
+.titleblock .v.big { font-size: 16px; font-weight: 700; }
+.titleblock .proj { display: flex; align-items: center; gap: 8px; }
+.sheetno { position: absolute; right: 48px; bottom: 48px; z-index: 4; margin: 0; display: flex; border: 1.5px solid var(--line); background: var(--blue); font: 500 11px/1 var(--font-mono); letter-spacing: .06em; }
+.sheetno span { padding: 8px 12px; border-right: 1px solid var(--line-soft); }
+.sheetno span:last-child { border-right: 0; }
+.sheetno .k { color: var(--cyan); }
+
+/* ── 로우 폴리 캐비닛 ── */
+.stage3d { position: absolute; z-index: 2; width: 220px; height: 520px; perspective: 1700px; pointer-events: none; }
+.lp { position: absolute; left: 0; top: 0; width: 220px; height: 520px; transform-style: preserve-3d; transform-origin: 110px 260px -105px; }
+.lp * { transform-style: preserve-3d; }
+.lp .g { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-origin: 0 0; }
+.lp .f { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+.lp .f svg { position: absolute; inset: 0; overflow: visible; }
+.lp .f svg polygon { fill: #1d1d28; }
+.lp .emit { box-shadow: 0 0 14px 2px var(--glow, transparent); }
+.lp .anchor { position: absolute; left: 0; top: 0; width: 2px; height: 2px; margin: -1px 0 0 -1px; }
+.lp .part.hidden .f { opacity: 0; }
+/* 강조: 나머지 흐림 (묶음 opacity는 3D를 납작하게 하므로 면에 줌) */
+.lp[data-focus] .f { opacity: .25; }
+.lp[data-focus="marquee"] .m-marquee .f,
+.lp[data-focus="screen"] .m-screen .f,
+.lp[data-focus="panel"] .m-panel .f,
+.lp[data-focus="door"] .m-door .f { opacity: 1; }
+/* 선(청사진) 모드 */
+.lp-wire .f { background: rgba(35, 70, 106, .42); border: 1px solid rgba(238, 240, 233, .8); }
+.lp-wire .f.fs { background: none; border: 0; }
+.lp-wire .f svg polygon { fill: rgba(35, 70, 106, .42); stroke: rgba(238, 240, 233, .85); stroke-width: 1.2; }
+.floor { position: absolute; z-index: 1; border-radius: 50%; pointer-events: none; background: radial-gradient(closest-side, rgba(10, 20, 40, .55), rgba(10, 20, 40, 0)); }
+.sheet.dark .floor { background: radial-gradient(closest-side, rgba(120, 70, 220, .3), rgba(60, 40, 120, 0)); }
+/* 청사진 테마: 면 테두리 선 */
+.lp-bp .f { box-shadow: inset 0 0 0 1px rgba(238, 240, 233, .22); }
+.lp-bp .emit { box-shadow: 0 0 10px 1px var(--glow, transparent), inset 0 0 0 1px rgba(238, 240, 233, .35); }
+.lp-bp .f.fs { box-shadow: none; }
+.lp-bp .f svg polygon { stroke: rgba(238, 240, 233, .28); stroke-width: 1; }
+
+/* ── 로드 애니메이션 (BPI.animateDraw) ── */
+.draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.6s cubic-bezier(.45,.05,.3,1) forwards; }
+.draw.d2 { animation-delay: .2s; }
+.draw.d3 { animation-delay: .45s; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.fadein { animation: fadein .5s ease-out both; }
+.fadein.f1 { animation-delay: .1s; }
+.fadein.f2 { animation-delay: .25s; }
+.fadein.late { animation-delay: 1.2s; }
+.fadein.later { animation-delay: 1.5s; }
+@keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+.reveal { animation: reveal 1s cubic-bezier(.45,.05,.3,1) both; }
+@keyframes reveal { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+html.static .draw { animation: none; stroke-dashoffset: 0; }
+html.static .fadein, html.static .reveal { animation: none; }
+@media (prefers-reduced-motion: reduce) { .draw, .fadein, .reveal { animation: none !important; stroke-dashoffset: 0; } }
+/* 전개도: 배율과 무관하게 선 굵기 유지 */
+.net .ln, .net .thin, .net .hid { vector-effect: non-scaling-stroke; }

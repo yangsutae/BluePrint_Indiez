@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BluePrint Indiez — 부산·울산·경남 게임 커뮤니티</title>
+<meta name="description" content="만들고 있는 게임을 함께 보고 이야기합니다. 게임을 만드는 사람들이 각자의 작업과 과정을 나누고, 시연과 대화로 교류하는 부산·울산·경남 게임 커뮤니티 BluePrint Indiez.">
+<meta property="og:title" content="BluePrint Indiez — 부산·울산·경남 게임 커뮤니티">
+<meta property="og:description" content="만들고 있는 게임을 함께 보고 이야기합니다.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#23466A">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/landing.css">
+</head>
+<body>
+<a class="skip" href="#join">함께하기로 바로 가기</a>
+
+<main>
+<!-- ───────── 데스크톱: 스크롤 연출 ───────── -->
+<section class="hero" id="hero" aria-label="BluePrint Indiez 소개">
+  <div class="vp" id="vp">
+    <div class="stage sheet" id="stage">
+
+      <!-- K0 도면 -->
+      <div class="layer k0" id="L0">
+        <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false" id="defs"></svg>
+        <div class="intro">
+          <p class="eyebrow fadein f1">부산·울산·경남 게임 커뮤니티</p>
+          <h1 class="brand"><img class="reveal" src="assets/BPI_무배경.svg" alt="BluePrint Indiez"></h1>
+          <p class="tagline fadein f1">만들고 있는 게임을<br>함께 보고 이야기합니다</p>
+          <p class="lead fadein f2">게임을 만드는 사람들이 각자의 작업과 과정을 나누고, 시연과 대화로 교류하는 모임입니다.</p>
+        </div>
+        <div class="titleblock fadein later" id="tb" role="group" aria-label="표제란">
+          <div class="span3"><span class="k">명칭</span><span class="v big">아케이드 캐비닛 — 모임 설계도</span></div>
+          <div class="span3"><span class="k">설명</span><span class="v">부산·울산·경남 거점 게임 커뮤니티</span></div>
+          <div class="last"><span class="k">시트</span><span class="v">01 / 08</span></div>
+          <div class="last"><span class="k">투상법</span><span class="v proj">제3각법 <svg width="46" height="18" viewBox="0 0 46 18" aria-hidden="true" focusable="false"><path d="M2 2 L20 5 L20 13 L2 16 Z" fill="none" stroke="#EEF0E9" stroke-width="1.2"/><line x1="0" y1="9" x2="22" y2="9" stroke="rgba(238,240,233,.6)" stroke-width=".8" stroke-dasharray="4 1.5 1 1.5"/><circle cx="36" cy="9" r="7" fill="none" stroke="#EEF0E9" stroke-width="1.2"/><circle cx="36" cy="9" r="4" fill="none" stroke="#EEF0E9" stroke-width="1.2"/></svg></span></div>
+          <div class="last"><span class="k">작성</span><span class="v">2026</span></div>
+        </div>
+        <div class="iso-frame fadein late" aria-hidden="true"><p class="cap-m">입체도 · 선</p></div>
+        <div class="rig" id="isoRig" aria-hidden="true" style="transform:translate(1104px,190px)"><div class="stage3d" id="isoBox" style="opacity:0"><div id="iso"></div></div></div>
+        <p class="cue fadein later" aria-hidden="true"><span>SCROLL ↓</span></p>
+      </div>
+
+
+      <!-- K7 각도 링 -->
+      <div class="layer" id="L7a" style="opacity:0" aria-hidden="true">
+        <svg class="ring" width="1440" height="900" viewBox="0 0 1440 900" focusable="false">
+          <line x1="700" y1="120" x2="700" y2="780" stroke="rgba(238,240,233,.28)" stroke-dasharray="18 4 2 4"/>
+          <ellipse cx="360" cy="690" rx="250" ry="52"/><ellipse cx="360" cy="690" rx="216" ry="44" stroke-dasharray="4 5"/>
+          <g id="ticks"></g><line class="needle" id="needle" x1="360" y1="690" x2="360" y2="690"/><circle id="needleDot" r="4" fill="#A6E8EB"/>
+        </svg>
+      </div>
+
+      <!-- 3D 캐비닛 -->
+      <div class="rig" id="rig" aria-hidden="true">
+        <div class="floor" id="floor" style="opacity:0"></div>
+        <div class="stage3d dwg" id="dwgBox"><div id="dwg3d" class="lp"></div></div>
+        <div class="stage3d wire" id="wireBox" style="opacity:0"><div id="wire"></div></div>
+        <div class="stage3d solid" id="solidBox" style="visibility:hidden"><div id="solid"></div></div>
+      </div>
+
+      <!-- 인출선 (부품 → 전개도) -->
+      <svg class="leaders" id="ld" width="1440" height="900" viewBox="0 0 1440 900" aria-hidden="true" focusable="false"></svg>
+
+      <!-- K2~K5 부품 패널 (landing.js가 채움) -->
+      <div id="panels"></div>
+
+      <!-- K7 와이어프레임 보기 -->
+      <div class="layer" id="L7c" style="opacity:0; visibility:hidden">
+        <button type="button" class="wf-toggle" id="wfBtn" aria-pressed="false"><span class="sw" aria-hidden="true"></span>와이어프레임 <b id="wfState">OFF</b></button>
+      </div>
+
+      <!-- K7 마무리 -->
+      <div class="layer" id="L7b" style="opacity:0; visibility:hidden">
+        <div class="closing">
+          <p class="eyebrow">부산·울산·경남 게임 커뮤니티</p>
+          <p class="brand"><img src="assets/BPI_무배경.svg" alt=""></p>
+          <h2 class="tagline">만들고 있는 게임을<br>함께 보고 이야기합니다</h2>
+          <p class="lead">게임을 만드는 사람들이 각자의 작업과 과정을 나누고, 시연과 대화로 교류하는 모임입니다.</p>
+          <div class="links">
+            <a class="btn primary" href="https://invite.kakao.com/tc/2BYLO0beM5" target="_blank" rel="noopener">카카오톡 공지 채팅방 참여하기</a>
+            <a class="btn ghost" href="mailto:ltk06twin@gmail.com">이메일로 문의하기</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<ol class="progress" id="progress" aria-label="장면 이동"></ol>
+
+<!-- ───────── 좁은 화면: 세로 내용 ───────── -->
+<div class="mobile">
+  <p class="eyebrow">부산·울산·경남 게임 커뮤니티</p>
+  <h1 class="brand"><img src="assets/BPI_무배경.svg" alt="BluePrint Indiez" style="width:100%;height:auto"></h1>
+  <p class="tagline">만들고 있는 게임을<br>함께 보고 이야기합니다</p>
+  <p class="lead">게임을 만드는 사람들이 각자의 작업과 과정을 나누고, 시연과 대화로 교류하는 모임입니다.</p>
+  <img class="fig" src="assets/cabinet-wire.png" alt="">
+  <section aria-labelledby="m-topics">
+    <p class="kicker"><b>2</b>화면</p>
+    <h2 id="m-topics">어떤 이야기를 나누나요</h2>
+    <ol class="list">
+      <li><span>01</span><span>만들고 있는 게임과 프로토타입</span></li>
+      <li><span>02</span><span>기획·아트·프로그래밍·사운드 등 개발 경험</span></li>
+      <li><span>03</span><span>작업 중의 고민, 선택의 이유, 발견</span></li>
+    </ol>
+  </section>
+  <section aria-labelledby="m-ways">
+    <p class="kicker"><b>3</b>조작부</p>
+    <h2 id="m-ways">참여 방식</h2>
+    <ol class="list">
+      <li><span>01</span><span>작업 보여주기</span></li>
+      <li><span>02</span><span>서로의 게임을 플레이하고 의견 나누기</span></li>
+      <li><span>03</span><span>발표·시연 없이 듣고 교류해도 괜찮아요</span></li>
+      <li><span>04</span><span>직군·소속·완성도와 무관하게 누구나</span></li>
+    </ol>
+  </section>
+</div>
+</main>
+
+<!-- ───────── 함께하기 (공통) ───────── -->
+<footer class="foot" id="join">
+  <div class="foot-in">
+    <div>
+      <p class="brand"><img src="assets/BPI_무배경.svg" alt="BluePrint Indiez" style="width:100%;height:auto"></p>
+      <h2>함께하기</h2>
+      <p>공지 채팅방에서 모임 소식을 받아 보고, 궁금한 점은 이메일로 편하게 물어보세요.</p>
+    </div>
+    <div class="links">
+      <a class="btn primary" href="https://invite.kakao.com/tc/2BYLO0beM5" target="_blank" rel="noopener">카카오톡 공지 채팅방 참여하기</a>
+      <a class="btn ghost" href="mailto:ltk06twin@gmail.com">이메일로 문의하기</a>
+    </div>
+    <small>BluePrint Indiez · 부산·울산·경남 게임 커뮤니티</small>
+  </div>
+</footer>
+
+<script src="js/lowpoly.js"></script>
+<script src="js/sheet.js"></script>
+<script src="js/parts.js"></script>
+<script src="js/landing.js"></script>
+</body>
+</html>
