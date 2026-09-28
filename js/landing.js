@@ -102,7 +102,7 @@
   prog.addEventListener('click', function (e) {
     var a = e.target.closest('a'); if (!a) return; e.preventDefault();
     var range = hero.offsetHeight - window.innerHeight;
-    window.scrollTo({ top: hero.offsetTop + range * +a.dataset.p, behavior: reduce ? 'auto' : 'smooth' });
+    window.scrollTo({ top: hero.offsetTop + range * toR(+a.dataset.p), behavior: reduce ? 'auto' : 'smooth' });
   });
   var dots = Array.prototype.slice.call(prog.querySelectorAll('a'));
 
@@ -125,10 +125,23 @@
     el.style.opacity = op.toFixed(3);
     el.style.visibility = op > .02 ? 'visible' : 'hidden';
   }
+  /* 스크롤 양 배분: 포커스 구간(진행률 0.30~0.70)에 스크롤을 FOCUS_SLOW배 더 씀.
+     스크롤 비율 r(0~1) ↔ 장면 진행률 p(0~1). 페이지 길이는 css .hero height로 함께 늘림 */
+  var FOCUS_SLOW = 2.2, F0 = .30, F1 = .70, TOTAL = F0 + (F1 - F0) * FOCUS_SLOW + (1 - F1);
+  function toP(r) {
+    var u = r * TOTAL;
+    if (u <= F0) return u;
+    if (u <= F0 + (F1 - F0) * FOCUS_SLOW) return F0 + (u - F0) / FOCUS_SLOW;
+    return F1 + (u - F0 - (F1 - F0) * FOCUS_SLOW);
+  }
+  function toR(p) {
+    var u = p <= F0 ? p : p <= F1 ? F0 + (p - F0) * FOCUS_SLOW : F0 + (F1 - F0) * FOCUS_SLOW + (p - F1);
+    return u / TOTAL;
+  }
   function progress() {
     if (FIXED !== null) return FIXED;
     var range = hero.offsetHeight - window.innerHeight;
-    return range > 0 ? clamp(-hero.getBoundingClientRect().top / range) : 0;
+    return range > 0 ? clamp(toP(clamp(-hero.getBoundingClientRect().top / range))) : 0;
   }
 
   /* 로드 시 선 입체는 도면 선이 그려진 뒤(1.2초~1.7초) 나타남 */
@@ -144,7 +157,14 @@
     /* 캐비닛 위치·각도 */
     var T = trackAt(p), spinW = ramp(p, .78, .82);
     var ry = T[4] - spin * spinW;
-    rig.style.transform = 'translate(' + T[0].toFixed(1) + 'px,' + T[1].toFixed(1) + 'px)';
+    var C = camAt(p), X = T[0] + C.dx, Y = T[1] + C.dy;
+    /* 가운데(K1) → 첫 포커스: 왼쪽 자리를 거치지 않고 포커스 위치로 곧장 이동 (왼쪽 끝까지 갔다 되돌아오는 움직임 없음) */
+    if (p > .26 && p < .31 && CAMS.marquee) {
+      var w = ease((p - .26) / .05), c0 = CAMS.marquee, A0 = TRACK[2], A1 = TRACK[3];
+      X = lerp(A0[1], A1[1] + c0.dx, w); Y = lerp(A0[2], A1[2] + c0.dy, w);
+    }
+    rig.style.transformOrigin = '0 0';
+    rig.style.transform = 'translate(' + X.toFixed(1) + 'px,' + Y.toFixed(1) + 'px) scale(' + C.zs.toFixed(4) + ')';
     var dz = .01 + .99 * ramp(p, .07, .16);
     var key = T[2].toFixed(3) + '|' + T[3].toFixed(2) + '|' + ry.toFixed(2) + '|' + dz.toFixed(3);
     if (key !== lastView) { wire.setView(T[3], ry, T[2], dz); solid.setView(T[3], ry, T[2], dz); dwg3d.style.transform = BPI.viewTransform(T[3], ry, T[2], dz); lastView = key; }
@@ -164,17 +184,20 @@
     dwgBox.style.visibility = p < .23 ? 'visible' : 'hidden';
     isoBox.style.opacity = intro.toFixed(3);
 
-    /* K2~K5 부품 */
-    var active = null, activeOp = 0;
+    /* K2~K5 부품 (D6 방식): 네 부품이 한 번에 분해된 뒤, 카메라가 부품 하나씩 확대하며 포커싱 */
+    var ex = ramp(p, .26, .31) * (1 - ramp(p, .70, .76));
+    var active = null, activeOp = 0, focusKey = null;
     BPI.PART_ORDER.forEach(function (k, i) {
       var a = PART_SEG[i], tt = clamp((p - a) / .10);
-      var out = ramp(tt, 0, .3) * (1 - ramp(tt, .8, 1));
-      var op = ramp(tt, .18, .34) * (1 - ramp(tt, .8, .94));
-      var o = BPI.PARTS[k].off;
-      partGroups[k].style.transform = out > 0 ? 'translate3d(' + (o[0] * out).toFixed(1) + 'px,' + (o[1] * out).toFixed(1) + 'px,' + (o[2] * out).toFixed(1) + 'px)' : '';
+      var op = ramp(tt, .28, .44) * (1 - ramp(tt, .86, .98));
+      var o = EXPLODE[k];
+      var fw = ramp(p, a, a + .04) * (1 - ramp(p, a + .10, a + .14)), sc = 1 + (FOCUS_SCALE - 1) * fw;
+      partGroups[k].style.transform = ex > 0 ? 'translate3d(' + (o[0] * ex).toFixed(1) + 'px,' + (o[1] * ex).toFixed(1) + 'px,' + (o[2] * ex).toFixed(1) + 'px)' + (sc > 1.001 ? ' scale3d(' + sc.toFixed(4) + ',' + sc.toFixed(4) + ',' + sc.toFixed(4) + ')' : '') : '';
       show(panelEls[i], op);
       if (op > activeOp) { activeOp = op; active = k; }
+      if (p >= a && p < a + .10) focusKey = k;
     });
+    if (focusKey) $('solid').setAttribute('data-focus', focusKey); else $('solid').removeAttribute('data-focus');
 
     /* 인출선: 빠져나온 부품 → 전개도 칸 */
     if (active && activeOp > .05) {
@@ -202,6 +225,41 @@
   syncWf();
   wfBtn.addEventListener('click', function () { wireframe = wireframe ? 0 : 1; syncWf(); dirty = true; });
 
+  /* 분해 위치: 네 부품이 동시에 앞으로 빠지며 위아래로 벌어짐 */
+  var EXPLODE = { marquee: [0, -70, 150], screen: [0, -30, 190], panel: [0, 30, 220], door: [0, 90, 160] };
+  /* 포커스 배율: 카메라 확대(ZOOM 1.5)로 모든 사물이 1.5배, 포커스된 부품만 추가로 키워 2배가 되게 함 */
+  var PART_CENTER = { marquee: [110, 52, -12], screen: [110, 195, -60], panel: [110, 280, -25], door: [110, 398, -30] };
+  var FOCUS_SCALE = 2 / 1.5;
+  BPI.PART_ORDER.forEach(function (k) { var c = PART_CENTER[k]; partGroups[k].style.transformOrigin = c[0] + 'px ' + c[1] + 'px ' + c[2] + 'px'; });
+  /* 카메라: 분해가 끝난 상태에서 부품 위치를 한 번 재서 확대 목표를 정함 (D6 measure 방식) */
+  var FOCUS = [380, 450], ZOOM = 1.5, CAMS = {};
+  function measure() {
+    var P2 = TRACK[3];   /* 부품 설명 자리 */
+    rig.style.transformOrigin = '0 0';
+    rig.style.transform = 'translate(' + P2[1] + 'px,' + P2[2] + 'px)';
+    solid.setView(P2[4], P2[5], P2[3], 1);
+    BPI.PART_ORDER.forEach(function (k) { var o = EXPLODE[k]; partGroups[k].style.transform = 'translate3d(' + o[0] + 'px,' + o[1] + 'px,' + o[2] + 'px)'; });
+    var rr = rig.getBoundingClientRect();
+    BPI.PART_ORDER.forEach(function (k) {
+      var an = $('solid').querySelector('[data-a="' + k + '"]').getBoundingClientRect();
+      var lx = (an.left + an.width / 2 - rr.left) / K, ly = (an.top + an.height / 2 - rr.top) / K;
+      CAMS[k] = { zs: ZOOM, dx: FOCUS[0] - P2[1] - lx * ZOOM, dy: FOCUS[1] - P2[2] - ly * ZOOM };
+    });
+    lastView = ''; dirty = true;
+  }
+  function camAt(p) {
+    var id = { zs: 1, dx: 0, dy: 0 }, prev = id;
+    for (var i = 0; i < BPI.PART_ORDER.length; i++) {
+      /* 첫 포커스는 왼쪽 이동(TRACK 0.26~0.30)과 같은 구간에서 함께 확대해, 왼쪽 끝까지 갔다가 되돌아오는 움직임을 없앰 */
+      var c = CAMS[BPI.PART_ORDER[i]], a = i === 0 ? .26 : PART_SEG[i], dur = i === 0 ? .05 : .04;
+      if (!c || p < a) return prev;
+      if (p < a + dur) { var t = ease((p - a) / dur); return { zs: lerp(prev.zs, c.zs, t), dx: lerp(prev.dx, c.dx, t), dy: lerp(prev.dy, c.dy, t) }; }
+      prev = c;
+    }
+    var b = ramp(p, .70, .74);
+    return { zs: lerp(prev.zs, 1, b), dx: lerp(prev.dx, 0, b), dy: lerp(prev.dy, 0, b) };
+  }
+
   /* ── 루프: 스크롤이 바뀌거나 K7에서 회전 중일 때만 다시 그림 ── */
   var last = null;
   window.addEventListener('scroll', function () { dirty = true; }, { passive: true });
@@ -214,6 +272,7 @@
     if (dirty || p !== lastP) { dirty = false; lastP = p; render(p); }
     requestAnimationFrame(frame);
   }
+  measure(); window.addEventListener('resize', measure); if (document.fonts) document.fonts.ready.then(measure);
   render(progress());
   requestAnimationFrame(frame);
 })();

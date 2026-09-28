@@ -7,18 +7,18 @@
   BPI.PARTS = {
     marquee: {
       n: 1, sheet: '03', name: '간판', topic: '모임 소개', off: [0, -40, 220],
-      title: '만들고 있는 게임을<br>함께 보고 이야기합니다',
-      lead: '간판은 모임의 얼굴입니다.',
+      title: '함께 성장하는<br>게임개발자의 커뮤니티',
+      lead: '간판에는 우리가 함께 내건 이름, EACH GAME. TOGETHER.',
       items: [
         { at: 'front', label: '이름', text: 'BluePrint Indiez' },
         { at: 'top', label: '지역', text: '부산·울산·경남 거점 게임 커뮤니티' },
-        { at: 'side', label: '모임', text: '게임을 만드는 사람들이 각자의 작업과 과정을 나누고, 시연과 대화로 교류합니다.' }
+        { at: 'side', label: '모임', text: '각자의 작업을 공유하고, 시연과 대화로 교류합니다.' }
       ]
     },
     screen: {
       n: 2, sheet: '04', name: '화면', topic: '나누는 주제', off: [0, -30, 250],
       title: '어떤 이야기를 나누나요',
-      lead: '화면에 띄우고, 들려주고, 함께 들여다보는 것들입니다.',
+      lead: '나는 어떤 사람이며, 무엇을 꿈꾸고 만들어가고 있는가. 화면에 띄워 함께 봅니다.',
       items: [
         { at: 'screen', label: '화면', text: '만들고 있는 게임과 프로토타입' },
         { at: 'speaker', label: '스피커 턱', text: '기획·아트·프로그래밍·사운드 등 개발 경험' },
@@ -39,10 +39,9 @@
     door: {
       n: 4, sheet: '06', name: '동전 투입구', topic: '함께하기', off: [0, 20, 200],
       title: '함께하기',
-      lead: '공지 채팅방에서 모임 소식을 받아 보고, 궁금한 점은 이메일로 편하게 물어보세요.',
+      lead: '공지 채팅방에서 모임 소식을 가장 먼저 받아 보세요.',
       items: [
-        { at: 'coin1', label: '투입구 1', text: '카카오톡 공지 채팅방', href: 'https://invite.kakao.com/tc/2BYLO0beM5', btn: '카카오톡 공지 채팅방 참여하기', primary: true },
-        { at: 'coin2', label: '투입구 2', text: '이메일 문의', href: 'mailto:ltk06twin@gmail.com', btn: '이메일로 문의하기' }
+        { at: 'coin1', label: '투입구', text: '카카오톡 공지 채팅방', href: 'https://invite.kakao.com/tc/2BYLO0beM5', btn: '카카오톡 공지 채팅방 참여하기', primary: true }
       ]
     }
   };
@@ -55,7 +54,7 @@
       return '<li' + c + '><span class="num">' + p.n + '</span>' + p.name + '</li>';
     }).join('') + '</ol>';
   };
-  BPI.markHTML = '<div class="mark"><p class="brand"><img src="assets/BPI_무배경.svg" alt="BluePrint Indiez"></p></div>';
+  BPI.markHTML = '<div class="mark"><p class="brand"><img src="../assets/BPI_무배경.svg" alt="BluePrint Indiez"></p></div>';
   BPI.itemHTML = function (it, i) {
     var link = it.href ? '<a class="btn ' + (it.primary ? 'primary' : 'ghost') + '" href="' + it.href + '"' + (it.href.indexOf('http') === 0 ? ' target="_blank" rel="noopener"' : '') + '>' + it.btn + '</a>' : '';
     return '<li><span class="num">' + (i + 1) + '</span><span><small>' + it.label + '</small>' + (it.href ? link : it.text) + '</span></li>';

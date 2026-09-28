@@ -6,7 +6,7 @@ body { min-width: 0; background: var(--blue); }
 .skip:focus { top: 12px; }
 
 /* ── 스크롤 무대: 1440×900 무대를 창에 맞춰 확대·축소 ── */
-.hero { position: relative; height: 880vh; }
+.hero { position: relative; height: 1300vh; }   /* 포커스 구간만 2.2배 길게 (js FOCUS_SLOW) */
 .vp {
   position: sticky; top: 0; height: 100vh; overflow: hidden;
   background-color: var(--blue);
@@ -128,3 +128,11 @@ body { min-width: 0; background: var(--blue); }
 /* K0 → K1: 3면도가 3D 공간 안에서 모델과 함께 회전 */
 .rig .stage3d.dwg { z-index: 1; overflow: visible; }
 #dwg3d svg { position: absolute; left: -90px; top: -290px; overflow: visible; }
+
+/* 부품 포커싱: 나머지 부품·몸체는 흐리게 (id 선택자 투명도 80%보다 우선) */
+#solid .f { transition: opacity .35s; }
+#solid[data-focus] .f { opacity: .22; }
+#solid[data-focus="marquee"] .m-marquee .f,
+#solid[data-focus="screen"] .m-screen .f,
+#solid[data-focus="panel"] .m-panel .f,
+#solid[data-focus="door"] .m-door .f { opacity: .9; }
