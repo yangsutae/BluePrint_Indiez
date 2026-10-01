@@ -31,12 +31,11 @@ body { min-width: 0; background: var(--blue); }
 @keyframes cue { 50% { transform: translateY(6px); } }
 @media (prefers-reduced-motion: reduce) { .cue span { animation: none; } }
 
-/* 3D 캐비닛 (한 벌을 스크롤 따라 이동) */
-.rig { position: absolute; left: 0; top: 0; width: 220px; height: 520px; z-index: 3; pointer-events: none; will-change: transform; }
-.rig .stage3d { left: 0; top: 0; }
-.rig .wire { z-index: 2; }
-.rig .solid { z-index: 3; }
+/* 캐비닛 (한 벌을 스크롤 따라 이동). 모델은 무대 전체 크기 캔버스에 그림 — CSS 3D 없음 */
+.rig { position: absolute; left: 0; top: 0; width: 220px; height: 520px; z-index: 3; pointer-events: none; }
 .rig .floor { left: -80px; top: 480px; width: 420px; height: 56px; z-index: 1; }
+canvas.model { position: absolute; left: 0; top: 0; width: 1440px; height: 900px; z-index: 3; pointer-events: none; }
+#isoCv { position: absolute; left: -80px; top: -80px; width: 380px; height: 680px; }   /* js ISO_BOX와 같게 */
 
 /* K2~K5 부품 패널 (인셋 청사진 + 설명) */
 .mini {
@@ -106,8 +105,6 @@ body { min-width: 0; background: var(--blue); }
   .foot .btn { justify-content: center; }
 }
 
-/* 3D 모델 투명도 80% (면마다 적용: 묶음에 주면 3D가 납작해짐) */
-#solid .f { opacity: .8; }
 
 /* K7 와이어프레임 켜기·끄기 */
 .wf-toggle {
@@ -125,23 +122,12 @@ body { min-width: 0; background: var(--blue); }
 .wf-toggle[aria-pressed="true"] .sw::after { transform: translateX(14px); background: var(--cyan); }
 .wf-toggle:hover { border-color: var(--cyan); }
 
-/* K0 → K1: 3면도가 3D 공간 안에서 모델과 함께 회전 */
-.rig .stage3d.dwg { z-index: 1; overflow: visible; }
+/* K0 → K1: 3면도가 모델과 함께 회전 (2D matrix, js BPI.planeMatrix) */
+.rig .dwg2d { position: absolute; left: 0; top: 0; z-index: 1; }
+#dwg3d { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
 #dwg3d svg { position: absolute; left: -90px; top: -290px; overflow: visible; }
 
-/* 부품 포커싱: 나머지 부품·몸체는 흐리게 (id 선택자 투명도 80%보다 우선) */
-#solid .f { transition: opacity .35s; }
-#solid[data-focus] .f { opacity: .22; }
-#solid[data-focus="marquee"] .m-marquee .f,
-#solid[data-focus="screen"] .m-screen .f,
-#solid[data-focus="panel"] .m-panel .f,
-#solid[data-focus="door"] .m-door .f { opacity: .9; }
-
-/* ── 흰색 외곽 버전: 3D 모델 면마다 흰 외곽선 ── */
-#solid .f { box-shadow: inset 0 0 0 1.2px rgba(255, 255, 255, .92); }
-#solid .emit { box-shadow: 0 0 10px 1px var(--glow, transparent), inset 0 0 0 1.2px rgba(255, 255, 255, .95); }
-#solid .f.fs { box-shadow: none; }
-#solid .f svg polygon { stroke: rgba(255, 255, 255, .92); stroke-width: 1.2; stroke-linejoin: round; }
+/* 모델 투명도(80%)·부품 강조 흐림·흰 외곽선은 js/lowpoly.js가 캔버스에 그릴 때 줌 */
 
 /* ── 부품 패널: 제목 카드(위) ↔ 전개도 칸(아래) 위치 바꿈, 제목만 남김 ── */
 .desc { top: 110px; bottom: auto; min-height: 184px; padding: 22px 28px 24px; }   /* 제목 한 줄·두 줄 모두 같은 높이 */

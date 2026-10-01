@@ -1,13 +1,20 @@
 ---
-title: "BluePrint Indiez 랜딩페이지 (작동 결과물)"
-date_created: 2026-09-28
+title: "BluePrint Indiez 랜딩페이지 — 2D 캔버스 판"
+date_created: 2026-10-02
 type: project
 source: self
 tags: [BluePrint_Indiez, 홈페이지, 랜딩페이지]
 status: active
 ---
 
-# BluePrint Indiez 랜딩페이지 (최종본)
+# BluePrint Indiez 랜딩페이지 — 2D 캔버스 판
+
+> `../_archive/260928-landing/`(이전 최종본, CSS 3D 판)과 장면·문구·동작이 같고, 캐비닛을 그리는 방식만 다르다. 원본은 면 319개를 div + CSS 3D 변환으로 쌓아 브라우저 하드웨어 가속이 꺼지면 화면이 깨질 수 있었다. 이 판은 animejs.com처럼 2D 캔버스에 직접 그린다: 면을 좌표로만 들고 원근(1700px)·앞뒤 순서·명암을 `js/lowpoly.js`가 계산한다. 페이지 어디에도 CSS 3D 변환(`preserve-3d`, `translate3d` 등)이 없다.
+>
+> - 캐비닛·선 입체·K0 입체도: `<canvas>` (무대 전체 `#cv`, 입체도 `#isoCv`)
+> - 3면도 그림: SVG 그대로, 모델과 함께 도는 구간은 2D `matrix()`로 근사 (`BPI.planeMatrix`, 정면 각도에서는 정확히 겹침)
+> - 부품 강조 흐림(0.35초 전환)·80% 투명도·흰 외곽선·빛 번짐: 캔버스에 그릴 때 줌
+> - 확인(2026-10-02): GPU를 끈 Edge에서 장면 7곳을 원본과 나란히 캡처해 같은 모습, 스크립트 오류 없음
 
 
 > 최종본. K2~K5 구간은 D6 방식(한 번에 분해 → 카메라가 부품 하나씩 확대·포커싱)으로 바꾸고, 포커스 중에는 카메라 확대로 모든 사물이 1.5배, 포커스된 부품만 2배로 보인다. 포커스 구간은 스크롤을 2.2배 더 쓴다. 제작 과정은 `../작업과정_명세서.md`.
@@ -20,11 +27,11 @@ status: active
 ## 파일
 
 ```
-260928-landing/
+261002-landing-canvas/
   index.html          페이지 (진입점)
   css/base.css        색·선·시트·3D 면 스타일
   css/landing.css     페이지 배치·스크롤 무대·모바일
-  js/lowpoly.js       로우 폴리 아케이드 캐비닛 (CSS 3D)
+  js/lowpoly.js       로우 폴리 아케이드 캐비닛 (2D 캔버스: 투영·정렬·명암 계산)
   js/sheet.js         시트 테두리·3면도·전개도·선 그리기
   js/parts.js         부품별 문구 (간판·화면·조작부·동전 투입구)
   js/landing.js       스크롤 연출
@@ -63,4 +70,4 @@ status: active
 
 ## 외부 연결
 
-- 글꼴만 Google Fonts(IBM Plex Sans KR·Mono). 그 외 모두 폴더 안. WebGL·외부 라이브러리 없음.
+- 글꼴만 Google Fonts(IBM Plex Sans KR·Mono). 그 외 모두 폴더 안. WebGL·CSS 3D·외부 라이브러리 없음.

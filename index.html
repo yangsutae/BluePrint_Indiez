@@ -42,7 +42,7 @@
           <div class="last"><span class="k">작성</span><span class="v">2026</span></div>
         </div>
         <div class="iso-frame fadein late" aria-hidden="true"><p class="cap-m">입체도 · 선</p></div>
-        <div class="rig" id="isoRig" aria-hidden="true" style="transform:translate(1104px,190px)"><div class="stage3d" id="isoBox" style="opacity:0"><div id="iso"></div></div></div>
+        <div class="rig" id="isoRig" aria-hidden="true" style="transform:translate(1104px,190px)"><canvas id="isoCv" style="opacity:0"></canvas></div>
         <p class="cue fadein later" aria-hidden="true"><span class="mouse"></span><span class="lbl">SCROLL</span></p>
       </div>
 
@@ -56,13 +56,12 @@
         </svg>
       </div>
 
-      <!-- 3D 캐비닛 -->
+      <!-- 캐비닛: 바닥 그림자·3면도(2D 변환) + 모델(2D 캔버스) -->
       <div class="rig" id="rig" aria-hidden="true">
         <div class="floor" id="floor" style="opacity:0"></div>
-        <div class="stage3d dwg" id="dwgBox"><div id="dwg3d" class="lp"></div></div>
-        <div class="stage3d wire" id="wireBox" style="opacity:0"><div id="wire"></div></div>
-        <div class="stage3d solid" id="solidBox" style="visibility:hidden"><div id="solid"></div></div>
+        <div class="dwg dwg2d" id="dwgBox"><div id="dwg3d"></div></div>
       </div>
+      <canvas class="model" id="cv" aria-hidden="true"></canvas>
 
       <!-- 인출선 (부품 → 전개도) -->
       <svg class="leaders" id="ld" width="1440" height="900" viewBox="0 0 1440 900" aria-hidden="true" focusable="false"></svg>
