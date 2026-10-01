@@ -38,6 +38,7 @@
   placeTB(); if (document.fonts) document.fonts.ready.then(placeTB);
 
   /* ── K2~K5 부품 패널 ── */
+  /* 인출선이 닿는 전개도 칸 위아래 범위는 화면에서 직접 잼 (가이드가 세로 가운데 정렬이라 위치가 고정되지 않음) */
   var panels = $('panels');
   BPI.PART_ORDER.forEach(function (key) {
     var P = BPI.PARTS[key], N = BPI.NETS[key];
@@ -46,17 +47,23 @@
       var x = p[0]; used.forEach(function (u) { if (Math.abs(u - x) < 30) x = u + 30; }); used.push(x); return x - p[0];
     }, function (i, p) { return top - p[1]; });
     panels.insertAdjacentHTML('beforeend',
-      '<div class="layer part-panel" data-part="' + key + '" style="opacity:0; visibility:hidden">' +
+      '<div class="layer part-panel" data-part="' + key + '" style="opacity:0; visibility:hidden"><div class="guide">' +   /* 제목 카드 + 전개도 칸을 한 묶음(가이드)으로 */
         '<figure class="mini"><figcaption class="mini-h"><span>전개도 · 부품 ' + P.n + ' ' + P.name + '</span><span>펼친 그림</span></figcaption>' +
-          '<svg class="dwg" width="662" height="226" viewBox="0 0 662 226" role="img" aria-label="' + P.name + ' 전개도">' + g.svg + bal + '</svg>' +
+          '<svg class="dwg" width="662" height="226" viewBox="0 0 662 226" role="img" aria-label="' + P.name + ' 전개도">' + g.svg + '</svg>' +   /* 설명 목록을 뺐으므로 번호 풍선도 뺌 */
           '<p class="mini-f">면 구성 · ' + N.faces + ' · 점선 = 접는 선</p></figure>' +
         '<article class="card desc"><span class="big-no" aria-hidden="true">0' + P.n + '</span>' +
-          '<p class="kicker"><b>' + P.n + '</b>부품 ' + P.n + ' / 4 · ' + P.name + '</p>' +
-          '<h2 class="page-title">' + P.title + '</h2><p class="page-lead">' + P.lead + '</p>' +
-          '<ol class="list nums">' + P.items.map(BPI.itemHTML).join('') + '</ol></article>' +
-      '</div>');
+          '<p class="kicker"><b>' + P.n + '</b>' + P.name + ' — ' + P.topic + '</p>' +
+          '<h2 class="page-title">' + P.title + '</h2><p class="page-lead">' + P.lead + '</p></article>' +   /* 중제목·대제목·대제목 설명만 남김 (번호 목록·링크 버튼은 뺌) */
+      '</div></div>');
   });
   var panelEls = Array.prototype.slice.call(document.querySelectorAll('.part-panel'));
+  /* 네 제목 카드 높이를 가장 큰 카드에 맞춤 (장면이 바뀌어도 묶음 위치가 흔들리지 않게) */
+  function equalCards() {
+    var cards = panelEls.map(function (el) { return el.querySelector('.desc'); }), h = 0;
+    cards.forEach(function (c) { c.style.minHeight = ''; h = Math.max(h, c.offsetHeight); });
+    cards.forEach(function (c) { c.style.minHeight = h + 'px'; });
+  }
+  equalCards(); if (document.fonts) document.fonts.ready.then(equalCards);
 
   /* ── K7 각도 링 ── */
   var CX = 360, CY = 690, RX = 250, RY = 52, t = '';
@@ -101,8 +108,9 @@
   prog.innerHTML = SCENES.map(function (s, i) { return '<li><a href="#hero" data-p="' + s[1] + '" aria-label="' + s[0] + '"></a></li>'; }).join('');
   prog.addEventListener('click', function (e) {
     var a = e.target.closest('a'); if (!a) return; e.preventDefault();
+
     var range = hero.offsetHeight - window.innerHeight;
-    window.scrollTo({ top: hero.offsetTop + range * toR(+a.dataset.p), behavior: reduce ? 'auto' : 'smooth' });
+    glide(Math.round(hero.offsetTop + range * toR(+a.dataset.p)), SEGMENT_MS);   /* 바로가기: 거리와 상관없이 SEGMENT_MS */
   });
   var dots = Array.prototype.slice.call(prog.querySelectorAll('a'));
 
@@ -189,11 +197,18 @@
     var active = null, activeOp = 0, focusKey = null;
     BPI.PART_ORDER.forEach(function (k, i) {
       var a = PART_SEG[i], tt = clamp((p - a) / .10);
-      var op = ramp(tt, .28, .44) * (1 - ramp(tt, .86, .98));
+      /* 묶음(가이드)이 스크롤에 따라 천천히 드러나고 사라짐: 아래에서 올라오며 나타나고, 위로 올라가며 사라짐.
+         제목 카드가 먼저, 전개도 칸이 조금 늦게 따라옴 */
+
+      var guide = panelEls[i].querySelector(".guide");
+      var cIn = ease(clamp((tt - .08) / .32)), mIn = ease(clamp((tt - .16) / .32)), cOut = ease(clamp((tt - .66) / .26)), mOut = ease(clamp((tt - .72) / .26));
+      guide.children[0].style.transform = "translateY(" + ((1 - mIn) * 36 - mOut * 36).toFixed(1) + "px)"; guide.children[0].style.opacity = (mIn * (1 - mOut)).toFixed(3);
+      guide.children[1].style.transform = "translateY(" + ((1 - cIn) * 36 - cOut * 36).toFixed(1) + "px)"; guide.children[1].style.opacity = (cIn * (1 - cOut)).toFixed(3);
       var o = EXPLODE[k];
       var fw = ramp(p, a, a + .04) * (1 - ramp(p, a + .10, a + .14)), sc = 1 + (FOCUS_SCALE - 1) * fw;
       partGroups[k].style.transform = ex > 0 ? 'translate3d(' + (o[0] * ex).toFixed(1) + 'px,' + (o[1] * ex).toFixed(1) + 'px,' + (o[2] * ex).toFixed(1) + 'px)' + (sc > 1.001 ? ' scale3d(' + sc.toFixed(4) + ',' + sc.toFixed(4) + ',' + sc.toFixed(4) + ')' : '') : '';
-      show(panelEls[i], op);
+      var op = Math.max(cIn * (1 - cOut), mIn * (1 - mOut));   /* 인출선 진하기 */
+      show(panelEls[i], op > .001 ? 1 : 0);   /* 투명도는 제목 카드·전개도 칸에 각각 줌 */
       if (op > activeOp) { activeOp = op; active = k; }
       if (p >= a && p < a + .10) focusKey = k;
     });
@@ -203,8 +218,10 @@
     if (active && activeOp > .05) {
       var an = $('solid').querySelector('[data-a="' + active + '"]').getBoundingClientRect(), sr = stage.getBoundingClientRect();
       var ax = (an.left + an.width / 2 - sr.left) / K, ay = (an.top + an.height / 2 - sr.top) / K;
-      var y = Math.max(158, Math.min(422, ay));
-      ld.innerHTML = '<path d="M730 ' + y.toFixed(1) + ' H700 L' + ax.toFixed(1) + ' ' + ay.toFixed(1) + '"/><circle class="dot" cx="' + ax.toFixed(1) + '" cy="' + ay.toFixed(1) + '" r="3"/>';
+      var mr = panelEls[BPI.PART_ORDER.indexOf(active)].querySelector('.mini').getBoundingClientRect();
+      var my0 = (mr.top - sr.top) / K, my1 = (mr.bottom - sr.top) / K, mx = (mr.left - sr.left) / K;
+      var y = Math.max(my0 + 18, Math.min(my1 - 18, ay));   /* 전개도 칸 높이 안에서 */
+      ld.innerHTML = '<path d="M' + mx.toFixed(1) + ' ' + y.toFixed(1) + ' H' + (mx - 30).toFixed(1) + ' L' + ax.toFixed(1) + ' ' + ay.toFixed(1) + '"/><circle class="dot" cx="' + ax.toFixed(1) + '" cy="' + ay.toFixed(1) + '" r="3"/>';
       ld.style.opacity = activeOp.toFixed(3);
     } else { ld.innerHTML = ''; }
 
@@ -263,8 +280,99 @@
   /* ── 루프: 스크롤이 바뀌거나 K7에서 회전 중일 때만 다시 그림 ── */
   var last = null;
   window.addEventListener('scroll', function () { dirty = true; }, { passive: true });
+  /* ── 마찰 구간: 부품 글을 읽는 구간에서는 장면이 스크롤보다 느리게(약 30%) 진행 ──
+     스크롤 위치(target)와 화면 진행(v)을 따로 둠. 평소에는 v가 target을 부드럽게 따라가고,
+     읽는 구간 안에서는 스크롤 변화량의 30%만 반영 + 아주 천천히 따라잡아, 끌려가지 않고 "무거워지는" 느낌.
+     장면 바로가기 점을 누른 직후와 동작 줄이기 설정에서는 마찰 없이 바로 따라감. */
+  var FRICTION = .30, ZONE = [.035, .075];   /* 부품 구간(0.10) 안 읽는 구간: 제목 카드·전개도가 선명한 곳 */
+  var v = null, lastTarget = null, navUntil = 0;
+  function inZone(x) {
+    for (var i = 0; i < PART_SEG.length; i++) { var a = PART_SEG[i]; if (x >= a + ZONE[0] && x <= a + ZONE[1]) return true; }
+    return false;
+  }
+  function follow(target, ts) {
+    if (v === null || FIXED !== null || reduce || ts < navUntil) { v = target; lastTarget = target; return v; }
+    var dp = target - lastTarget; lastTarget = target;
+    if (inZone(v)) v += dp * FRICTION + (target - v) * .015;
+    else v += (target - v) * .14;
+    if (Math.abs(target - v) < 1e-5) v = target;
+    v = clamp(v);
+    return v;
+  }
+
+
+  /* ── 이동 (방향키·PageUp/PageDown·장면 바로가기 공통) ──
+     지연 원인: 멈춤 지점이 "화면이 멈춰 있는 구간"(글이 완전히 보이는 구간, 도면 대기 구간 등)의 한가운데에 있어서,
+     키를 눌러도 그 구간의 남은 부분을 스크롤하는 동안(이동 시간의 약 20~30%) 화면이 전혀 변하지 않았음.
+     해결: 멈춤 지점마다 "화면이 같은 구간" [들어온 끝, 나가는 끝]을 두고,
+       ↓ 누르면 → 지금 구간의 나가는 끝으로 순간 이동(화면 변화 없음) → 다음 지점의 들어온 끝까지 이동
+       ↑ 누르면 → 지금 구간의 들어온 끝으로 순간 이동 → 이전 지점의 나가는 끝까지 이동
+     그래서 누르는 즉시 장면이 움직이기 시작함.
+     속도: 가속 10% · 등속 · 감속 30%의 사다리꼴 속도. SEGMENT_MS = 지점과 지점 사이 걸리는 시간(속도 조절).
+     이동 중 다시 누르면 가속 없이 지금 속도로 이어서 감. 이동하는 동안 마찰 구간 없음. 휠·터치하면 멈춤. */
+  var SEGMENT_MS = 1600, ACC = .10, DEC = .30, MID_SHARE = .12, glideId = null;   /* 가속 구간을 짧게(10%) 해 출발이 굼뜨지 않게 */
+  function profile(k, acc) {   /* 0~1 시간 → 0~1 거리, 사다리꼴 속도 */
+    var a = acc, d = DEC, vmax = 1 / (1 - a / 2 - d / 2);
+    if (k < a) return vmax * k * k / (2 * a);
+    if (k < 1 - d) return vmax * (a / 2 + (k - a));
+    var r = 1 - k; return 1 - vmax * r * r / (2 * d);
+  }
+  function glide(to, ms, fromY, mid) {   /* mid: 이 지점까지는 이동 시간의 MID_SHARE만 씀 */
+    var moving = glideId !== null;
+    if (glideId) cancelAnimationFrame(glideId);
+    if (fromY !== undefined) window.scrollTo(0, fromY);   /* 화면이 같은 구간 안에서 순간 이동 */
+    var from = window.scrollY;
+    if (reduce || Math.abs(to - from) < 1) { glideId = null; window.scrollTo(0, to); return; }
+    var dur = ms || SEGMENT_MS, acc = moving ? 0 : ACC, t0 = performance.now();
+    navUntil = t0 + dur + 400;
+    (function step(now) {
+      var k = Math.min(1, (now - t0) / dur);
+      var u = profile(k, acc);
+      window.scrollTo(0, mid === undefined ? from + (to - from) * u : (u < MID_SHARE ? from + (mid - from) * (u / MID_SHARE) : mid + (to - mid) * ((u - MID_SHARE) / (1 - MID_SHARE))));
+      var pp = follow(progress(), now); lastP = pp; render(pp);   /* 같은 프레임에 바로 그림 (한 프레임 늦게 따라가던 것 제거, 키보드 이동에만) */
+      glideId = k < 1 ? requestAnimationFrame(step) : null;
+    })(t0);
+  }
+  /* 사용자가 휠·터치로 직접 스크롤하면 이동을 멈춤 */
+  ['wheel', 'touchstart'].forEach(function (ev) { window.addEventListener(ev, function () { if (glideId) { cancelAnimationFrame(glideId); glideId = null; keyIdx = null; } }, { passive: true }); });
+
+  /* 멈춤 지점과 "화면이 같은 구간" (장면 진행률) */
+  var STOP_SPANS = [[0, .06], [.24, .26]].concat(PART_SEG.map(function (a) { return [a + .048, a + .066]; }), [[.82, 1]]);
+  var keyIdx = null;
+  function pxOf(p) { return Math.round(hero.offsetTop + (hero.offsetHeight - window.innerHeight) * toR(p)); }
+  function stopList() {
+    var range = hero.offsetHeight - window.innerHeight, maxY = document.documentElement.scrollHeight - window.innerHeight;
+    var px = function (p) { return Math.round(hero.offsetTop + range * toR(p)); };
+    var list = STOP_SPANS.map(function (s) { return [px(s[0]), px(s[1])]; });
+    var j = Math.round(Math.min(maxY, $('join').getBoundingClientRect().top + window.scrollY));
+    list.push([j, j]);   /* 함께하기 */
+    return list;
+  }
+  window.addEventListener('keydown', function (e) {
+    if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    var down = e.key === 'ArrowDown' || e.key === 'PageDown', up = e.key === 'ArrowUp' || e.key === 'PageUp';   /* PageUp/PageDown도 같게 */
+    if (!down && !up) return;
+    var t = e.target; if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+    if (!hero.offsetHeight) return;   /* 좁은 화면(세로 내용)은 기본 스크롤 */
+    e.preventDefault();
+    var list = stopList(), y = window.scrollY, cur = -1, next;
+    if (glideId !== null && keyIdx !== null) cur = keyIdx;   /* 이동 중이면 가고 있는 지점 기준 */
+    else for (var i = 0; i < list.length; i++) if (y >= list[i][0] - 4 && y <= list[i][1] + 4) { cur = i; break; }
+    if (cur >= 0) next = cur + (down ? 1 : -1);
+    else if (down) { next = list.length; for (var n = 0; n < list.length; n++) if (list[n][0] > y) { next = n; break; } }
+    else { next = -1; for (var m = list.length - 1; m >= 0; m--) if (list[m][1] < y) { next = m; break; } }
+    if (next < 0 || next >= list.length) return;
+    var depart = (cur >= 0 && glideId === null) ? (down ? list[cur][1] : list[cur][0]) : undefined;   /* 같은 화면 구간의 끝에서 출발 */
+    keyIdx = next;
+    /* ↓로 다음 부품·마지막 장면에 갈 때: 카메라·캐비닛이 실제로 움직이기 시작하는 지점(mid)까지는 앞 카드가 흐려지기만 해서
+       이동 거리의 약 40%를 3D가 가만히 있었음 → 그 앞부분은 이동 시간의 20%만 쓰고 빨리 지나가도록 함 (키보드 이동에만 적용) */
+    var mid;
+    if (down) { if (next >= 3 && next <= 5) mid = pxOf(PART_SEG[next - 2]); else if (next === 6) mid = pxOf(.70); }
+    glide(down ? list[next][0] : list[next][1], SEGMENT_MS, depart, mid);
+  });
+
   function frame(ts) {
-    var p = progress();
+    var p = follow(progress(), ts);
     var spinning = p >= .78 && !reduce && FIXED === null;
     if (spinning && last !== null) { spin += (ts - last) / 1000 * 12; dirty = true; }
     if (p < .78 && spin !== 0) { spin = 0; dirty = true; }

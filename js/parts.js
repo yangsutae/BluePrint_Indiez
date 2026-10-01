@@ -6,9 +6,9 @@
   var BPI = window.BPI = window.BPI || {};
   BPI.PARTS = {
     marquee: {
-      n: 1, sheet: '03', name: '간판', topic: '모임 소개', off: [0, -40, 220],
-      title: '함께 성장하는<br>게임개발자의 커뮤니티',
-      lead: '간판에는 우리가 함께 내건 이름, EACH GAME. TOGETHER.',
+      n: 1, sheet: '03', name: '간판', topic: '이름', off: [0, -40, 220],
+      title: '만들어 가는 과정의 배경',
+      lead: '블루프린트, 즉 설계도는 무언가를 만들 때 배경이 됩니다. 개발자들이 만들어 가는 과정을 나누는 배경 중 하나가 되고 싶습니다.',
       items: [
         { at: 'front', label: '이름', text: 'BluePrint Indiez' },
         { at: 'top', label: '지역', text: '부산·울산·경남 거점 게임 커뮤니티' },
@@ -16,9 +16,9 @@
       ]
     },
     screen: {
-      n: 2, sheet: '04', name: '화면', topic: '나누는 주제', off: [0, -30, 250],
-      title: '어떤 이야기를 나누나요',
-      lead: '나는 어떤 사람이며, 무엇을 꿈꾸고 만들어가고 있는가. 화면에 띄워 함께 봅니다.',
+      n: 2, sheet: '04', name: '화면', topic: '주제', off: [0, -30, 250],
+      title: '어떤 주제든 환영합니다',
+      lead: '완성된 게임이 아니어도 됩니다. 기획서 한 장, 버그가 나는 프로토타입, 작업하다 생긴 고민까지 화면에 띄워 함께 봅니다.',
       items: [
         { at: 'screen', label: '화면', text: '만들고 있는 게임과 프로토타입' },
         { at: 'speaker', label: '스피커 턱', text: '기획·아트·프로그래밍·사운드 등 개발 경험' },
@@ -26,9 +26,9 @@
       ]
     },
     panel: {
-      n: 3, sheet: '05', name: '조작부', topic: '참여 방식', off: [0, 10, 250],
-      title: '참여 방식',
-      lead: '조작부의 네 자리가 참여하는 네 가지 방법입니다.',
+      n: 3, sheet: '05', name: '조작부', topic: '참여', off: [0, 10, 250],
+      title: '발표자도 얻어 가는 자리',
+      lead: '평가하고 평가받는 자리가 아닙니다. 발표자는 의견을 얻어 가고, 모두가 같은 주제를 두고 생각을 나누는 참여자입니다. 발표·시연·교류 중에서 골라 참여하세요.',
       items: [
         { at: 'joy1', label: 'P1 조이스틱', text: '작업 보여주기' },
         { at: 'btn1', label: 'P1 버튼', text: '서로의 게임을 플레이하고 의견 나누기' },
@@ -38,8 +38,8 @@
     },
     door: {
       n: 4, sheet: '06', name: '동전 투입구', topic: '함께하기', off: [0, 20, 200],
-      title: '함께하기',
-      lead: '공지 채팅방에서 모임 소식을 가장 먼저 받아 보세요.',
+      title: '동전은 필요 없어요',
+      lead: '회비와 참가비가 없습니다. 어떤 직군이든, 학생이든 현업이든 누구나. 매월 부산 센텀시티에서 만나는 것을 목표로 합니다.',
       items: [
         { at: 'coin1', label: '투입구', text: '카카오톡 공지 채팅방', href: 'https://invite.kakao.com/tc/2BYLO0beM5', btn: '카카오톡 공지 채팅방 참여하기', primary: true }
       ]
