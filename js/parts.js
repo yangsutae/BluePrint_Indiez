@@ -54,7 +54,7 @@
       return '<li' + c + '><span class="num">' + p.n + '</span>' + p.name + '</li>';
     }).join('') + '</ol>';
   };
-  BPI.markHTML = '<div class="mark"><p class="brand"><img src="../assets/BPI_무배경.svg" alt="BluePrint Indiez"></p></div>';
+  BPI.markHTML = '<div class="mark"><p class="brand"><img src="assets/BPI_무배경.svg" alt="BluePrint Indiez"></p></div>';
   BPI.itemHTML = function (it, i) {
     var link = it.href ? '<a class="btn ' + (it.primary ? 'primary' : 'ghost') + '" href="' + it.href + '"' + (it.href.indexOf('http') === 0 ? ' target="_blank" rel="noopener"' : '') + '>' + it.btn + '</a>' : '';
     return '<li><span class="num">' + (i + 1) + '</span><span><small>' + it.label + '</small>' + (it.href ? link : it.text) + '</span></li>';
