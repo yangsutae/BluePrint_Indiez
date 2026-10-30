@@ -27,16 +27,15 @@
   var tags = [['marquee', 1], ['screen', 2], ['panel', 3], ['door', 4]].map(function (t) {
     var p = BPI.DWG[t[0]];
     return '<path class="thin" d="M' + p[0] + ' ' + p[1] + ' L-38 ' + p[1] + '"/><circle cx="' + p[0] + '" cy="' + p[1] + '" r="3" fill="#EEF0E9"/>' +
-      '<g class="num-b"><circle class="bl" cx="-52" cy="' + p[1] + '" r="14"/><text x="-52" y="' + (p[1] + 4) + '">' + t[1] + '</text></g>';
+      '<g class="num-b"><text x="-52" y="' + (p[1] + 8) + '">' + t[1] + '</text></g>';   /* 번호: 원 없이 손글씨 숫자 (24px 가운데를 선 높이에) */
   }).join('');
-  /* 3면도를 모델 좌표에 둠: 도면 x 0 = 모델 x -10 (옆판 바깥), 도면 y = 모델 y. 보조 도면(평면·측면·치수·번호)과 정면도를 나눠 따로 흐리게 */
-  $('dwg3d').innerHTML = '<svg width="640" height="880" viewBox="-80 -290 640 880" aria-hidden="true" focusable="false">' +
-    '<g id="dwgAux">' + BPI.views().replace(BPI.FRONT(), '') + tags + '</g><g id="dwgFront">' + BPI.FRONT() + '</g></svg>';
+  /* 3면도를 모델 좌표에 둠: 도면 x 0 = 모델 x -10 (옆판 바깥), 도면 y = 모델 y. 보조 도면(평면·측면·치수·번호·투상 보조선)과 정면도를 나눠 따로 흐리게.
+     선은 손그림으로 바꿈 (js/sketch.js, 보조선을 먼저 만들어야 시안과 같은 그림) */
+  $('dwg3d').innerHTML = '<svg width="640" height="880" viewBox="-80 -290 640 880" aria-hidden="true" focusable="false">' + BPI.sketch.defs() +
+    '<g id="dwgAux">' + BPI.sketch.cons() + BPI.views().replace(BPI.FRONT(), '') + tags + '</g><g id="dwgFront">' + BPI.FRONT() + '</g></svg>';
+  BPI.sketch.svg($('dwg3d').querySelector('svg'));
   BPI.animateDraw($('dwg3d'));
-
-  /* 표제란 아래 끝을 3면도 바닥선(y 790)에 맞춤 */
-  function placeTB() { var tb = $('tb'); tb.style.top = (790 - tb.offsetHeight) + 'px'; }
-  placeTB(); if (document.fonts) document.fonts.ready.then(placeTB);
+  $('dwg3d').querySelectorAll('.cons').forEach(function (el) { el.setAttribute('pathLength', '1'); el.classList.add('draw'); });
 
   /* ── K2~K5 부품 패널 ── */
   /* 인출선이 닿는 전개도 칸 위아래 범위는 화면에서 직접 잼 (가이드가 세로 가운데 정렬이라 위치가 고정되지 않음) */
@@ -126,7 +125,7 @@
     var r = K * DPR;
     cv.width = Math.round(1440 * r); cv.height = Math.round(900 * r);
     isoCv.width = Math.round(ISO_BOX[2] * r); isoCv.height = Math.round(ISO_BOX[3] * r);
-    if (r > 0) { isoCtx.setTransform(r, 0, 0, r, 0, 0); isoCtx.clearRect(0, 0, ISO_BOX[2], ISO_BOX[3]); isoCtx.translate(-ISO_BOX[0], -ISO_BOX[1]); iso.draw(isoCtx, 1); }
+    if (r > 0) { isoCtx.setTransform(r, 0, 0, r, 0, 0); isoCtx.clearRect(0, 0, ISO_BOX[2], ISO_BOX[3]); isoCtx.translate(-ISO_BOX[0], -ISO_BOX[1]); BPI.sketch.iso(isoCtx, iso); }
   }
   fit(); window.addEventListener('resize', function () { fit(); dirty = true; });
 
@@ -349,12 +348,9 @@
   var keyIdx = null;
   function pxOf(p) { return Math.round(hero.offsetTop + (hero.offsetHeight - window.innerHeight) * toR(p)); }
   function stopList() {
-    var range = hero.offsetHeight - window.innerHeight, maxY = document.documentElement.scrollHeight - window.innerHeight;
+    var range = hero.offsetHeight - window.innerHeight;
     var px = function (p) { return Math.round(hero.offsetTop + range * toR(p)); };
-    var list = STOP_SPANS.map(function (s) { return [px(s[0]), px(s[1])]; });
-    var j = Math.round(Math.min(maxY, $('join').getBoundingClientRect().top + window.scrollY));
-    list.push([j, j]);   /* 함께하기 */
-    return list;
+    return STOP_SPANS.map(function (s) { return [px(s[0]), px(s[1])]; });
   }
   window.addEventListener('keydown', function (e) {
     if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;

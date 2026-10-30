@@ -1,0 +1,102 @@
+/* BluePrint Indiez Design System — tokens
+   원본은 볼트 홈페이지/design-system/tokens.css. 값을 바꿀 때는 원본을 고친 뒤 이 파일에 그대로 복사한다. */
+:root {
+  /* ── Color: primitive (BPI 팔레트 유지) ── */
+  --color-ink: #15263a;            /* 제목, 본문 글자 */
+  --color-blue-deep: #1b3753;      /* 어두운 밴드 위 카드 면 */
+  --color-blue: #23466a;           /* 주 CTA, 어두운 밴드 */
+  --color-cyan: #a6e8eb;           /* 어두운 면 위 강조, 버튼 hover 바탕 */
+  --color-teal: #004854;           /* 밝은 면 위 라벨, 버튼 hover 글자 */
+  --color-teal-tint: #e2f4f4;      /* stat 타일 */
+  --color-paper: #fafbf8;          /* 페이지 바탕 */
+  --color-white: #ffffff;          /* 카드, 입력창 바탕 */
+  --color-band: #f1f3ee;           /* 표 머리줄 */
+  --color-line: #d8dee4;           /* hairline, 워드마크 스텐실 */
+  --color-line-strong: #9fb0c2;
+  --color-ink-muted: #4e5c6c;
+  --color-ink-soft: #7e8c9b;
+  --color-on-dark: #eef0e9;
+  --color-on-dark-muted: #eef0e9b8;
+  --color-on-dark-line: #eef0e952;
+  --color-grid-major: #a6e8eb29;
+  --color-grid-minor: #a6e8eb0f;
+  --color-success: #2e7d4f;
+  --color-error: #b3261e;
+
+  /* ── Color: role ── */
+  --surface-page: var(--color-paper);
+  --surface: var(--color-white);
+  --surface-dark: var(--color-blue);
+  --surface-dark-soft: var(--color-blue-deep);
+  --surface-tile: var(--color-teal-tint);
+  --surface-head: var(--color-band);
+  --text: var(--color-ink);
+  --text-muted: var(--color-ink-muted);
+  --text-soft: var(--color-ink-soft);
+  --text-on-dark: var(--color-on-dark);
+  --text-on-dark-muted: var(--color-on-dark-muted);
+  --label: var(--color-teal);
+  --label-on-dark: var(--color-cyan);
+  --line: var(--color-line);
+  --line-strong: var(--color-line-strong);
+  --line-on-dark: var(--color-on-dark-line);
+  --cta: var(--color-blue);
+  --on-cta: var(--color-on-dark);
+  --cta-hover: var(--color-cyan);
+  --on-cta-hover: var(--color-teal);
+  --focus: var(--color-teal);
+  --focus-on-dark: var(--color-cyan);
+  --stencil: var(--color-line);
+
+  /* ── Typography ── */
+  --font-sans: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "IBM Plex Sans KR", ui-monospace, monospace;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 700;              /* display, h2 크기의 강조 글자 */
+  /* 크기 / 줄 높이 / 자간 — 산세리프는 음의 자간, 모노는 양의 자간 */
+  --type-display-size: 64px;  --type-display-lh: 1.1;  --type-display-ls: -1.92px;
+  --type-h2-size: 40px;       --type-h2-lh: 1.2;       --type-h2-ls: -0.8px;
+  --type-h3-size: 22px;       --type-h3-lh: 1.3;       --type-h3-ls: -0.22px;
+  --type-lead-size: 18px;     --type-lead-lh: 1.6;     --type-lead-ls: -0.18px;
+  --type-body-size: 16px;     --type-body-lh: 1.6;     --type-body-ls: -0.16px;
+  --type-caption-size: 14px;  --type-caption-lh: 1.5;
+  --type-button-size: 15px;   --type-button-ls: 0;
+  --type-eyebrow-size: 11px;  --type-eyebrow-lh: 1.4;  --type-eyebrow-ls: 0.55px;
+  --type-display-size-m: 38px; --type-display-ls-m: -1.1px;
+  --type-h2-size-m: 28px;      --type-h2-ls-m: -0.5px;
+
+  /* ── Spacing (4px 단위) ── */
+  --space-2: 2px;  --space-4: 4px;  --space-8: 8px;  --space-12: 12px;
+  --space-16: 16px; --space-20: 20px; --space-24: 24px; --space-32: 32px;
+  --space-48: 48px; --space-64: 64px; --space-80: 80px;
+
+  /* ── Shape: 곡선은 오른쪽 아래 모서리 하나만 ── */
+  --radius-sm: 0 0 8px 0;          /* 배지, 타일, 입력 */
+  --radius-md: 0 0 15px 0;         /* 카드, 큰 패널 */
+  --radius-button: 0 0 16px 0 / 0 0 9px 0;  /* 버튼. 가로 16px, 세로 9px 타원 */
+  --stroke-hair: 1px;
+  --stroke: 1.5px;
+  --stroke-button: 2px;
+  --focus-width: 2px;
+  --focus-offset: 3px;
+
+  /* ── Layout ── */
+  --wrap: 1280px;
+  --prose: 660px;
+  --gutter: 32px;
+  --gutter-m: 16px;
+  --section: 80px;
+  --section-m: 64px;
+  --nav-h: 72px;
+  --nav-h-m: 60px;
+  --control-h: 44px;
+  --button-h: 48px;
+  --grid-major: 96px;
+  --grid-minor: 24px;
+  --bp-mobile: 820px;              /* 참고값. 미디어 쿼리에는 숫자를 직접 쓴다 */
+
+  /* ── Elevation: 그림자 없음. 떠 있는 요소만 ── */
+  --shadow-float: 0 4px 10px 0 #15263a1a;
+  --motion-fast: 150ms;
+}

@@ -93,20 +93,7 @@ a { color: inherit; }
 .leaders .arw { stroke: var(--cyan); stroke-width: 1.5; stroke-dasharray: 6 5; fill: none; }
 .leaders .arw-head { fill: var(--cyan); }
 
-/* ── 표제란·시트 번호 ── */
-.titleblock {
-  position: absolute; right: 48px; bottom: 48px; width: 452px; z-index: 4;
-  display: grid; grid-template-columns: 1fr 1.15fr .7fr;
-  border: 2px solid var(--line); background: var(--blue);
-}
-.titleblock > div { border-right: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); padding: 6px 10px 7px; }
-.titleblock > div:nth-child(3n) { border-right: 0; }
-.titleblock .span3 { grid-column: 1 / -1; border-right: 0; }
-.titleblock .last { border-bottom: 0; }
-.titleblock .k { display: block; font: 400 10px/1.3 var(--font-mono); color: var(--cyan); letter-spacing: .06em; margin-bottom: 3px; }
-.titleblock .v { display: block; font: 500 13px/1.35 var(--font-sans); color: var(--paper); }
-.titleblock .v.big { font-size: 16px; font-weight: 700; }
-.titleblock .proj { display: flex; align-items: center; gap: 8px; }
+/* ── 시트 번호 ── */
 .sheetno { position: absolute; right: 48px; bottom: 48px; z-index: 4; margin: 0; display: flex; border: 1.5px solid var(--line); background: var(--blue); font: 500 11px/1 var(--font-mono); letter-spacing: .06em; }
 .sheetno span { padding: 8px 12px; border-right: 1px solid var(--line-soft); }
 .sheetno span:last-child { border-right: 0; }
