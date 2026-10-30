@@ -15,7 +15,7 @@ BluePrint Indiez의 랜딩, 단체 소개와 오프라인 행사 기록을 담�
 │  └─ assets/photos/      사진 17장
 ├─ css/                  공통·랜딩 스타일
 ├─ js/                   랜딩 캔버스·스크롤
-├─ assets/               로고·파비콘·선 입체 그림·QR
+├─ assets/               로고·파비콘·선 입체 그림·QR·링크 썸네일
 ├─ CNAME                 indiez.org
 └─ .nojekyll             정적 파일 그대로 게시
 ```
