@@ -81,6 +81,14 @@
   var partGroups = solid.parts;   /* 부품 이동·배율: { o, s, c } */
   var cv = $('cv'), ctx = cv.getContext('2d'), isoCv = $('isoCv'), isoCtx = isoCv.getContext('2d');
   var ISO_BOX = [-80, -80, 380, 680];   /* 입체도 캔버스 자리 (isoRig 기준 왼쪽·위·폭·높이, css와 같게) */
+  /* 좁은 화면 그림: 같은 손그림 입체도. 칸 크기가 화면 높이·글꼴 로드에 따라 바뀌므로 크기가 바뀔 때마다 다시 그림 */
+  var M_BOX = [-40, 20, 300, 490], mIso = $('mIso');   /* 빈 여백을 덜어 낸 캔버스 자리 (css aspect-ratio와 같게) */
+  new ResizeObserver(function () {
+    var w = mIso.clientWidth; if (!w) return;
+    var r = w / M_BOX[2] * Math.min(2, window.devicePixelRatio || 1), c = mIso.getContext('2d');
+    mIso.width = Math.round(M_BOX[2] * r); mIso.height = Math.round(M_BOX[3] * r);
+    c.setTransform(r, 0, 0, r, 0, 0); c.translate(-M_BOX[0], -M_BOX[1]); BPI.sketch.iso(c, iso);
+  }).observe(mIso);
 
   /* 캐비닛 자리: [p, x, y, s, rx, ry] */
   var TRACK = [
