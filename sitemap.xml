@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://indiez.org/</loc><lastmod>2026-10-31</lastmod></url>
-  <url><loc>https://indiez.org/main/</loc><lastmod>2026-10-31</lastmod></url>
-  <url><loc>https://indiez.org/events/01/</loc><lastmod>2026-10-31</lastmod></url>
+  <url><loc>https://indiez.org/</loc><lastmod>2026-11-17</lastmod></url>
+  <url><loc>https://indiez.org/main/</loc><lastmod>2026-11-20</lastmod></url>
+  <url><loc>https://indiez.org/games/</loc><lastmod>2026-11-17</lastmod></url>
+  <url><loc>https://indiez.org/notice/</loc><lastmod>2026-11-17</lastmod></url>
+  <url><loc>https://indiez.org/events/</loc><lastmod>2026-11-17</lastmod></url>
+  <url><loc>https://indiez.org/events/next/</loc><lastmod>2026-11-20</lastmod></url>
+  <url><loc>https://indiez.org/events/01/</loc><lastmod>2026-11-17</lastmod></url>
 </urlset>

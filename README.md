@@ -8,13 +8,20 @@ BluePrint Indiez의 랜딩, 단체 소개와 오프라인 행사 기록을 담�
 .
 ├─ index.html             랜딩
 ├─ main/index.html        BPI 소개
-├─ events/01/index.html   제1회 포럼 기록
+├─ notice/index.html      공지사항
+├─ games/index.html       게임(포럼에 전시된 게임)
+├─ events/index.html      지난 행사(회차별 기록)
+├─ events/next/index.html 다음 행사 안내(지금은 제2회)
+├─ events/01/index.html   제1회 포럼 기록(만든 시점의 디자인 그대로, assets/css/2026-10/ 사용)
 ├─ assets/
 │  ├─ css/               공통·랜딩·행사 기록 스타일
-│  ├─ js/                랜딩 캔버스·스크롤·손그림, 사진 확대 보기
+│  │  └─ 2026-10/        제1회 기록이 쓰는 그 시점의 스타일(고치지 않음)
+│  ├─ js/                랜딩 캔버스·스크롤·손그림, 사진 확대 보기, 행사 일정별 표시
 │  └─ img/               로고·파비콘·선 입체 그림·QR·링크 썸네일
 │     └─ events/01/      제1회 사진 17장
 ├─ 404.html              없는 주소 안내 화면
+├─ favicon.ico           주소 루트 파비콘(icon-192.png에서 만든 16·32·48px)
+├─ llms.txt              AI 검색용 사이트 요약·핵심 정보·페이지 링크
 ├─ robots.txt            검색 로봇 안내·사이트맵 위치
 ├─ sitemap.xml           검색엔진용 페이지 목록
 ├─ CNAME                 indiez.org

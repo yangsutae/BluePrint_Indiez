@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BluePrint Indiez — 부산·울산·경남 게임 커뮤니티</title>
-<meta name="description" content="함께 성장하는 게임개발자의 커뮤니티. 부산·울산·경남을 거점으로, 다양한 개발자가 각자의 작업을 공유하고 함께 만들어 가는 게임 커뮤니티 BluePrint Indiez.">
+<title>블루프린트 인디즈(BluePrint Indiez, BPI) — 부산·울산·경남 게임 커뮤니티</title>
+<meta name="description" content="블루프린트 인디즈(BluePrint Indiez, BPI)는 부산·울산·경남을 거점으로, 다양한 개발자가 각자의 작업을 공유하고 함께 만들어 가는 게임 커뮤니티입니다.">
 <link rel="canonical" href="https://indiez.org/">
-<meta property="og:title" content="BluePrint Indiez — 부산·울산·경남 게임 커뮤니티">
-<meta property="og:description" content="함께 성장하는 게임개발자의 커뮤니티. EACH GAME. TOGETHER.">
+<meta property="og:title" content="블루프린트 인디즈(BluePrint Indiez, BPI) — 부산·울산·경남 게임 커뮤니티">
+<meta property="og:description" content="함께 성장하는 게임개발자의 커뮤니티, 블루프린트 인디즈(BPI). EACH GAME. TOGETHER.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://indiez.org/assets/img/og.png">
 <meta property="og:image:width" content="1200">
@@ -23,14 +23,16 @@
 <link rel="stylesheet" href="assets/css/base.css">
 <link rel="stylesheet" href="assets/css/landing.css">
 <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "WebSite", "name": "BluePrint Indiez", "alternateName": ["BPI", "블루프린트 인디즈"], "url": "https://indiez.org/"}
+{"@context": "https://schema.org", "@type": "WebSite", "@id": "https://indiez.org/#website", "name": "BluePrint Indiez", "alternateName": ["BPI", "블루프린트 인디즈"], "url": "https://indiez.org/", "inLanguage": "ko", "publisher": {"@id": "https://indiez.org/#organization"}}
 </script>
 <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "Organization", "name": "BluePrint Indiez", "url": "https://indiez.org/", "logo": "https://indiez.org/assets/img/icon-192.png"}
+{"@context": "https://schema.org", "@type": "Organization", "@id": "https://indiez.org/#organization", "name": "BluePrint Indiez", "alternateName": ["블루프린트 인디즈", "BPI"], "url": "https://indiez.org/", "logo": "https://indiez.org/assets/img/icon-192.png", "description": "부산·울산·경남을 거점으로, 다양한 개발자가 각자의 작업을 공유하고 함께 만들어 가는 게임 커뮤니티입니다.", "areaServed": [{"@type": "AdministrativeArea", "name": "부산광역시"}, {"@type": "AdministrativeArea", "name": "울산광역시"}, {"@type": "AdministrativeArea", "name": "경상남도"}], "foundingDate": "2026-10", "email": "yangsutae@indiez.org"}
 </script>
 </head>
 <body>
 <main>
+<!-- 문서 제목은 하나만: 데스크톱·좁은 화면 로고는 p로 두고 화면에 보이지 않는 h1로 이름을 알린다 -->
+<h1 class="sr-only">블루프린트 인디즈(BluePrint Indiez, BPI) — 부산·울산·경남 게임 커뮤니티</h1>
 <!-- ───────── 데스크톱: 스크롤 연출 ───────── -->
 <section class="hero" id="hero" aria-label="BluePrint Indiez 소개">
   <div class="vp" id="vp">
@@ -41,13 +43,16 @@
         <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false" id="defs"></svg>
         <div class="intro">
           <p class="eyebrow fadein f1">BPI CONNECTED · BUSAN·ULSAN·GYEONGNAM</p>
-          <h1 class="brand"><img class="reveal" src="assets/img/BPI_무배경.svg" alt="BluePrint Indiez"></h1>
+          <p class="brand"><img class="reveal" src="assets/img/BPI_무배경.svg" alt="BluePrint Indiez"></p>
           <p class="tagline fadein f1">함께 성장하는<br>게임개발자의 커뮤니티</p>
           <p class="lead fadein f2">부산·울산·경남을 거점으로, 다양한 개발자가 각자의 작업을 공유하고 함께 만들어 가는 게임 커뮤니티입니다.</p>
         </div>
         <div class="links tb-above reveal">
-          <a class="btn primary" href="https://invite.kakao.com/tc/2BYLO0beM5" target="_blank" rel="noopener"><span class="b-txt"><span class="b-code" aria-hidden="true">01 · JOIN</span><span class="b-main">카카오톡 공지 채팅방 참여하기<svg class="b-arw" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18 18 6M8 6h10v10"/></svg></span></span></a>
-          <a class="btn ghost" href="main/index.html"><span class="b-txt"><span class="b-code" aria-hidden="true">02 · ABOUT</span><span class="b-main">BPI 자세히 보기<svg class="b-arw" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18 18 6M8 6h10v10"/></svg></span></span></a>
+          <div class="b-row">
+            <a class="btn primary" href="https://invite.kakao.com/tc/2BYLO0beM5" target="_blank" rel="noopener"><span class="b-txt"><span class="b-code" aria-hidden="true">01 · JOIN</span><span class="b-main">카톡방 참여하기<svg class="b-arw" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18 18 6M8 6h10v10"/></svg></span></span></a>
+            <a class="btn ghost" href="events/next/index.html" data-until="2026-11-28T17:00:00+09:00"><span class="b-txt"><span class="b-code" aria-hidden="true">02 · FORUM</span><span class="b-main">제2회 포럼 신청<svg class="b-arw" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18 18 6M8 6h10v10"/></svg></span></span></a>
+          </div>
+          <a class="btn ghost" href="main/index.html"><span class="b-txt"><span class="b-code" aria-hidden="true">03 · ABOUT</span><span class="b-main">BPI 자세히 보기<svg class="b-arw" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18 18 6M8 6h10v10"/></svg></span></span></a>
         </div>
         <div class="iso-frame fadein late" aria-hidden="true"><p class="cap-m">입체도 · 선</p></div>
         <div class="rig" id="isoRig" aria-hidden="true" style="transform:translate(1104px,190px)"><canvas id="isoCv" style="opacity:0"></canvas></div>
@@ -92,6 +97,7 @@
           <div class="links">
             <a class="btn primary" href="https://invite.kakao.com/tc/2BYLO0beM5" target="_blank" rel="noopener">카카오톡 공지 채팅방 참여하기</a>
             <a class="btn ghost" href="main/index.html">BPI 자세히 보기 →</a>
+            <a class="btn ghost" href="events/next/index.html" data-until="2026-11-28T17:00:00+09:00">제2회 포럼 참가 신청 →</a>
             <img class="qr" src="assets/img/kakao_qr.svg" width="96" height="96" alt="카카오톡 공지 채팅방 참여 QR 코드">
           </div>
         </div>
@@ -104,13 +110,16 @@
 <!-- ───────── 좁은 화면: 한 화면 도면 (소개 → 입체도 → 두 버튼, 높이에 맞춰 크기 조절) ───────── -->
 <div class="mobile">
   <p class="eyebrow fadein f1">BPI CONNECTED · BUSAN·ULSAN·GYEONGNAM</p>
-  <h1 class="brand"><img class="reveal" src="assets/img/BPI_무배경.svg" alt="BluePrint Indiez" style="width:100%;height:auto"></h1>
+  <p class="brand"><img class="reveal" src="assets/img/BPI_무배경.svg" alt="BluePrint Indiez" style="width:100%;height:auto"></p>
   <p class="tagline fadein f1">함께 성장하는<br>게임개발자의 커뮤니티</p>
   <p class="lead fadein f2">부산·울산·경남을 거점으로, 다양한 개발자가 각자의 작업을 공유하고 함께 만들어 가는 게임 커뮤니티입니다.</p>
   <figure class="fig" aria-hidden="true"><canvas id="mIso"></canvas></figure>
   <div class="links tb-above reveal">
-    <a class="btn primary" href="https://invite.kakao.com/tc/2BYLO0beM5" target="_blank" rel="noopener"><span class="b-txt"><span class="b-code" aria-hidden="true">01 · JOIN</span><span class="b-main">카카오톡 공지 채팅방 참여하기<svg class="b-arw" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18 18 6M8 6h10v10"/></svg></span></span></a>
-    <a class="btn ghost" href="main/index.html"><span class="b-txt"><span class="b-code" aria-hidden="true">02 · ABOUT</span><span class="b-main">BPI 자세히 보기<svg class="b-arw" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18 18 6M8 6h10v10"/></svg></span></span></a>
+    <div class="b-row">
+      <a class="btn primary" href="https://invite.kakao.com/tc/2BYLO0beM5" target="_blank" rel="noopener"><span class="b-txt"><span class="b-code" aria-hidden="true">01 · JOIN</span><span class="b-main">카톡방 참여하기<svg class="b-arw" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18 18 6M8 6h10v10"/></svg></span></span></a>
+      <a class="btn ghost" href="events/next/index.html" data-until="2026-11-28T17:00:00+09:00"><span class="b-txt"><span class="b-code" aria-hidden="true">02 · FORUM</span><span class="b-main">제2회 포럼 신청<svg class="b-arw" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18 18 6M8 6h10v10"/></svg></span></span></a>
+    </div>
+    <a class="btn ghost" href="main/index.html"><span class="b-txt"><span class="b-code" aria-hidden="true">03 · ABOUT</span><span class="b-main">BPI 자세히 보기<svg class="b-arw" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18 18 6M8 6h10v10"/></svg></span></span></a>
   </div>
 </div>
 </main>
@@ -120,5 +129,6 @@
 <script src="assets/js/parts.js"></script>
 <script src="assets/js/sketch.js"></script>
 <script src="assets/js/landing.js"></script>
+<script src="assets/js/event-state.js"></script>
 </body>
 </html>

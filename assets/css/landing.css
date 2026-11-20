@@ -26,6 +26,10 @@ body { min-width: 0; background: var(--blue); }
 .k0 .tb-above { position: absolute; left: 72px; bottom: 110px; width: 428px; height: 150px; margin: 0; flex-direction: column; flex-wrap: nowrap; gap: 12px; }
 .tb-above.reveal { animation-fill-mode: backwards; }
 .k0 .tb-above .btn { flex: 1 1 0; height: auto; }
+/* 첫 줄: 카톡방 참여 자리를 가로로 반씩 나눠 포럼 신청 버튼과 함께 둠. 신청 버튼이 숨으면 카톡방 버튼이 줄을 다 채움 */
+.tb-above .b-row { display: flex; gap: 12px; flex: 1 1 0; min-width: 0; }
+.tb-above .b-row .btn { flex: 1 1 0; min-width: 0; padding-right: 12px; font-size: 17px; white-space: nowrap; }
+.tb-above .b-row .b-arw { right: 12px; width: 20px; height: 20px; }
 .tb-above .btn { position: relative; justify-content: flex-start; padding: 0 22px 0 16px; font-size: 20px; font-weight: 700; }
 .tb-above .btn::before { content: ""; position: absolute; inset: 4px; border: 1px solid var(--line-faint); pointer-events: none; }
 .tb-above .primary::before { border-color: rgba(35, 70, 106, .3); }
@@ -115,6 +119,9 @@ canvas.model { position: absolute; left: 0; top: 0; width: 1440px; height: 900px
   /* 두 버튼: 데스크톱 첫 화면 표제란 버튼을 세로로 (낮은 화면에서 48px까지) */
   .mobile .links { flex-direction: column; align-items: stretch; flex-wrap: nowrap; gap: clamp(8px, 1.4svh, 12px); margin-top: clamp(8px, 2.6svh, 22px); }
   .mobile .tb-above .btn { height: clamp(48px, 7svh, 56px); font-size: clamp(16px, 2.4svh, 18px); }
+  .mobile .tb-above .b-row { flex: none; gap: clamp(8px, 1.4svh, 12px); }
+  .mobile .tb-above .b-row .btn { padding: 0 10px 0 14px; font-size: 15px; }
+  .mobile .tb-above .b-row .b-arw { display: none; }
   /* 그림 칸: 남는 높이를 채우는 점선 칸. 캔버스는 칸 높이에 맞춰 가운데 (landing.js가 크기에 맞춰 다시 그림) */
   .mobile .fig { position: relative; margin: clamp(10px, 2.4svh, 24px) 0 0; border: 1px dashed rgba(166, 232, 235, .45); }
   .mobile .fig canvas { position: absolute; inset: 10px 0; margin: auto; height: calc(100% - 20px); width: auto; max-width: 100%; aspect-ratio: 300 / 490; }
@@ -130,6 +137,7 @@ canvas.model { position: absolute; left: 0; top: 0; width: 1440px; height: 900px
   .mobile .lead { font-size: clamp(13px, 4.6svh, 18px); }
   .mobile .links { grid-column: 1 / -1; flex-direction: row; gap: 12px; margin-top: clamp(6px, 2.6svh, 16px); }
   .mobile .links .btn { flex: 1 1 0; min-width: 0; }
+  .mobile .tb-above .b-row { flex: 2 1 0; gap: 12px; }
 }
 
 /* K7 와이어프레임 켜기·끄기 */

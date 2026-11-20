@@ -18,6 +18,7 @@ html, body { margin: 0; }
 body { background: var(--blue); color: var(--paper); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; min-width: 1440px; }
 a { color: inherit; }
 :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+[hidden] { display: none !important; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* ── 시트 ── */
